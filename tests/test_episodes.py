@@ -6,7 +6,7 @@ import pytest
 from pydantic import BaseModel
 
 from tests.utils import assert_error, download_and_save, parsed_json
-from trivialminus.exceptions import EpisodesNotFoundError
+from trivialminus.exceptions import SeasonNotFoundError, ShowNotFoundError
 
 if TYPE_CHECKING:
     from trivialminus import TrivialMinus
@@ -40,7 +40,7 @@ def test_download(client: Episodes, test_data: TestData) -> None:
     download_and_save(
         client,
         test_data.name,
-        lambda: client.download(test_data.show, season=test_data.season),
+        lambda: client.download(test_data.show, season_number=test_data.season),
     )
 
 
@@ -57,8 +57,8 @@ def test_download_invalid_show(client: Episodes) -> None:
     assert_error(
         client,
         "invalid-show",
-        lambda: client.download("invalid-show", season=1),
-        EpisodesNotFoundError,
+        lambda: client.download("invalid-show", season_number=1),
+        ShowNotFoundError,
     )
 
 
@@ -66,6 +66,6 @@ def test_download_invalid_season(client: Episodes) -> None:
     assert_error(
         client,
         "invalid-season",
-        lambda: client.download("south-park", season=999),
-        EpisodesNotFoundError,
+        lambda: client.download("south-park", season_number=999),
+        SeasonNotFoundError,
     )

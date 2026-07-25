@@ -15,7 +15,6 @@ from get_around import GetAround
 from trivialminus.episodes import Episodes
 from trivialminus.exceptions import ExtractionError, HTTPError, ResourceNotFoundError
 from trivialminus.movie import Movie
-from trivialminus.search import Search
 
 if TYPE_CHECKING:
     from collections.abc import Mapping
@@ -48,7 +47,6 @@ class TrivialMinus:
 
         self.episodes = Episodes(self)
         self.movie = Movie(self)
-        self.search = Search(self)
 
     def _json_headers(self, referer: str) -> dict[str, str]:
         return {

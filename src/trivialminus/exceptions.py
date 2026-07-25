@@ -1,4 +1,3 @@
-# TODO: Validate
 """Exceptions."""
 
 from __future__ import annotations
@@ -30,8 +29,22 @@ class ResourceNotFoundError(HTTPError):
     """Raised when the API reports that the requested resource does not exist."""
 
 
-class EpisodesNotFoundError(ResourceNotFoundError):
-    """Raised when the requested show or season episodes do not exist."""
+class ShowNotFoundError(ResourceNotFoundError):
+    """Raised when the requested show does not exist."""
+
+    def __init__(
+        self,
+        show: str,
+        status_code: int,
+        response: str | dict[str, Any] | None,
+    ) -> None:
+        """Initialize with the show and the originating response."""
+        self.show = show
+        super().__init__(status_code, response)
+
+
+class SeasonNotFoundError(ResourceNotFoundError):
+    """Raised when the requested season of an existing show does not exist."""
 
     def __init__(
         self,
