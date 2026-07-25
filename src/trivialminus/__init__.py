@@ -15,6 +15,7 @@ from get_around import GetAround
 from trivialminus.episodes import Episodes
 from trivialminus.exceptions import ExtractionError, HTTPError, ResourceNotFoundError
 from trivialminus.movie import Movie
+from trivialminus.seasons import Seasons
 
 if TYPE_CHECKING:
     from collections.abc import Mapping
@@ -28,6 +29,11 @@ logger.addHandler(NullHandler())
 _LD_JSON_RE = re.compile(
     r'<script type="application/ld\+json">(?P<json>.*?)</script>',
     re.DOTALL,
+)
+
+_USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 )
 
 
@@ -47,11 +53,12 @@ class TrivialMinus:
 
         self.episodes = Episodes(self)
         self.movie = Movie(self)
+        self.seasons = Seasons(self)
 
     def _json_headers(self, referer: str) -> dict[str, str]:
         return {
             # "Host": Set by httpx
-            # "User-Agent": Set by httpx
+            "User-Agent": _USER_AGENT,
             "Accept": "application/json, text/javascript, */*; q=0.01",
             "Accept-Language": "en-US,en;q=0.9",
             # "Accept-Encoding": Set by httpx
@@ -64,6 +71,7 @@ class TrivialMinus:
 
     def _page_headers(self, referer: str) -> dict[str, str]:
         return {
+            "User-Agent": _USER_AGENT,
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Accept-Language": "en-US,en;q=0.9",
             "Referer": referer,
@@ -95,15 +103,14 @@ class TrivialMinus:
         logger.debug("Downloaded %s (%.4f s)", log_id, time.monotonic() - start)
         return response.json()
 
-    def download_ld_json(
+    def download_html(
         self,
         url: str,
         *,
         referer: str,
-        schema_type: str,
         log_id: str,
-    ) -> dict[str, Any]:
-        """Download an HTML page and return the embedded ld+json block."""
+    ) -> str:
+        """Download an HTML page and return its raw text."""
         logger.debug("Downloading: %s", log_id)
         start = time.monotonic()
         response = self.get_around_client.get(
@@ -114,7 +121,19 @@ class TrivialMinus:
         if response.status_code != HTTPStatus.OK:
             _raise_for_status(response)
         logger.debug("Downloaded %s (%.4f s)", log_id, time.monotonic() - start)
-        return self._extract_ld_json(response.text, schema_type)
+        return response.text
+
+    def download_ld_json(
+        self,
+        url: str,
+        *,
+        referer: str,
+        schema_type: str,
+        log_id: str,
+    ) -> dict[str, Any]:
+        """Download an HTML page and return the embedded ld+json block."""
+        html = self.download_html(url, referer=referer, log_id=log_id)
+        return self._extract_ld_json(html, schema_type)
 
     @staticmethod
     def _extract_ld_json(html: str, schema_type: str) -> dict[str, Any]:
