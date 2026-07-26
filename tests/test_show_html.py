@@ -5,11 +5,11 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from trivialminus.exceptions import ShowNotFoundError
-from trivialminus.show_html import ShowHTML
+from trivial_minus.exceptions import ShowNotFoundError
+from trivial_minus.show_html import ShowHTML
 
 if TYPE_CHECKING:
-    from trivialminus import TrivialMinus
+    from trivial_minus import TrivialMinus
 
 # Anchors are out of order and Season 2 is duplicated to check sorting and dedup.
 _SAMPLE_HTML = """

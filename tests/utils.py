@@ -15,8 +15,8 @@ if TYPE_CHECKING:
     from good_ass_pydantic_integrator import GAPIClient
     from pydantic import BaseModel
 
-    from trivialminus.base_api_endpoint import BaseEndpoint
-    from trivialminus.exceptions import TrivialMinusError
+    from trivial_minus.base_api_endpoint import BaseEndpoint
+    from trivial_minus.exceptions import TrivialMinusError
 
 
 def json_path(

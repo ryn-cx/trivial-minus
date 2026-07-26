@@ -9,12 +9,12 @@ from typing import TYPE_CHECKING, Any
 from good_ass_pydantic_integrator import GAPIClient
 from pydantic import BaseModel
 
-from trivialminus.constants import FILES_PATH
+from trivial_minus.constants import FILES_PATH
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from trivialminus import TrivialMinus
+    from trivial_minus import TrivialMinus
 
 
 class BaseEndpoint[T: BaseModel, **P = ...](GAPIClient[T]):

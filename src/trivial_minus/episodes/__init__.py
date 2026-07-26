@@ -6,9 +6,9 @@ from http import HTTPStatus
 from logging import NullHandler, getLogger
 from typing import Any, override
 
-from trivialminus.base_api_endpoint import BaseEndpoint
-from trivialminus.episodes.models import EpisodesModel
-from trivialminus.exceptions import (
+from trivial_minus.base_api_endpoint import BaseEndpoint
+from trivial_minus.episodes.models import EpisodesModel
+from trivial_minus.exceptions import (
     ResourceNotFoundError,
     SeasonNotFoundError,
     ShowNotFoundError,

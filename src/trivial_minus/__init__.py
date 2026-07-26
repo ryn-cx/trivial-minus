@@ -12,10 +12,10 @@ from typing import TYPE_CHECKING, Any, NoReturn
 
 from get_around import GetAround
 
-from trivialminus.episodes import Episodes
-from trivialminus.exceptions import ExtractionError, HTTPError, ResourceNotFoundError
-from trivialminus.movie import Movie
-from trivialminus.show_html import ShowHTML
+from trivial_minus.episodes import Episodes
+from trivial_minus.exceptions import ExtractionError, HTTPError, ResourceNotFoundError
+from trivial_minus.movie import Movie
+from trivial_minus.show_html import ShowHTML
 
 if TYPE_CHECKING:
     from collections.abc import Mapping

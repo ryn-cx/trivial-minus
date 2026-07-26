@@ -6,7 +6,7 @@ from typing import Any
 
 
 class TrivialMinusError(Exception):
-    """Base exception for the trivialminus library."""
+    """Base exception for the trivial_minus library."""
 
     response: str | dict[str, Any] | None = None
 

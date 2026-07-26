@@ -5,9 +5,9 @@ from __future__ import annotations
 from logging import NullHandler, getLogger
 from typing import Any, override
 
-from trivialminus.base_api_endpoint import BaseEndpoint
-from trivialminus.exceptions import MovieNotFoundError, ResourceNotFoundError
-from trivialminus.movie.models import MovieModel
+from trivial_minus.base_api_endpoint import BaseEndpoint
+from trivial_minus.exceptions import MovieNotFoundError, ResourceNotFoundError
+from trivial_minus.movie.models import MovieModel
 
 logger = getLogger(__name__)
 logger.addHandler(NullHandler())

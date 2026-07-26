@@ -6,11 +6,11 @@ import pytest
 from pydantic import BaseModel
 
 from tests.utils import assert_error, download_and_save, parsed_json
-from trivialminus.exceptions import MovieNotFoundError
+from trivial_minus.exceptions import MovieNotFoundError
 
 if TYPE_CHECKING:
-    from trivialminus import TrivialMinus
-    from trivialminus.movie import Movie
+    from trivial_minus import TrivialMinus
+    from trivial_minus.movie import Movie
 
 
 class TestData(BaseModel):

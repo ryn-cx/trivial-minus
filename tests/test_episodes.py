@@ -6,11 +6,11 @@ import pytest
 from pydantic import BaseModel
 
 from tests.utils import assert_error, download_and_save, parsed_json
-from trivialminus.exceptions import SeasonNotFoundError, ShowNotFoundError
+from trivial_minus.exceptions import SeasonNotFoundError, ShowNotFoundError
 
 if TYPE_CHECKING:
-    from trivialminus import TrivialMinus
-    from trivialminus.episodes import Episodes
+    from trivial_minus import TrivialMinus
+    from trivial_minus.episodes import Episodes
 
 
 class TestData(BaseModel):

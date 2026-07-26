@@ -1,4 +1,4 @@
-"""Path and site constants for trivialminus."""
+"""Path and site constants for trivial_minus."""
 
 from pathlib import Path
 

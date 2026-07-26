@@ -1,7 +1,7 @@
 import pytest
 from get_around import build_client_automatically
 
-from trivialminus import TrivialMinus
+from trivial_minus import TrivialMinus
 
 
 @pytest.fixture(scope="session")

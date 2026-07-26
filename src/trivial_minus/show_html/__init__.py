@@ -7,10 +7,10 @@ import re
 from logging import NullHandler, getLogger
 from typing import TYPE_CHECKING
 
-from trivialminus.exceptions import ResourceNotFoundError, ShowNotFoundError
+from trivial_minus.exceptions import ResourceNotFoundError, ShowNotFoundError
 
 if TYPE_CHECKING:
-    from trivialminus import TrivialMinus
+    from trivial_minus import TrivialMinus
 
 logger = getLogger(__name__)
 logger.addHandler(NullHandler())
