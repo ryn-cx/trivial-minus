@@ -1,3 +1,4 @@
+# TODO: Validate
 """Exceptions."""
 
 from __future__ import annotations
@@ -5,15 +6,18 @@ from __future__ import annotations
 from typing import Any
 
 
+# TODO: Validate
 class TrivialMinusError(Exception):
-    """Base exception for the trivial_minus library."""
+    """Base exception for TrivialMinus."""
 
     response: str | dict[str, Any] | None = None
 
 
+# TODO: Validate
 class HTTPError(TrivialMinusError):
-    """Raised when an HTTP request fails with an unexpected status code."""
+    """Raised when HTTP request fails with unexpected status code."""
 
+    # TODO: Validate
     def __init__(
         self,
         status_code: int,
@@ -25,43 +29,32 @@ class HTTPError(TrivialMinusError):
         super().__init__(f"Unexpected response status code: {status_code}")
 
 
+# TODO: Validate
 class ResourceNotFoundError(HTTPError):
-    """Raised when the API reports that the requested resource does not exist."""
+    """Raised when the site reports that the requested page does not exist."""
 
 
+# TODO: Validate
 class ShowNotFoundError(ResourceNotFoundError):
     """Raised when the requested show does not exist."""
 
+    # TODO: Validate
     def __init__(
         self,
-        show: str,
+        show_id: str,
         status_code: int,
         response: str | dict[str, Any] | None,
     ) -> None:
-        """Initialize with the show and the originating response."""
-        self.show = show
+        """Initialize with the show id and the originating response."""
+        self.show_id = show_id
         super().__init__(status_code, response)
 
 
-class SeasonNotFoundError(ResourceNotFoundError):
-    """Raised when the requested season of an existing show does not exist."""
-
-    def __init__(
-        self,
-        show: str,
-        season: int,
-        status_code: int,
-        response: str | dict[str, Any] | None,
-    ) -> None:
-        """Initialize with the show, season, and the originating response."""
-        self.show = show
-        self.season = season
-        super().__init__(status_code, response)
-
-
+# TODO: Validate
 class MovieNotFoundError(ResourceNotFoundError):
     """Raised when the requested movie does not exist."""
 
+    # TODO: Validate
     def __init__(
         self,
         movie_id: str,
@@ -73,5 +66,44 @@ class MovieNotFoundError(ResourceNotFoundError):
         super().__init__(status_code, response)
 
 
+# TODO: Validate
 class ExtractionError(TrivialMinusError):
-    """Raised when expected data cannot be found in a page's HTML."""
+    """Raised when a page does not carry the data that was expected in it."""
+
+    # TODO: Validate
+    def __init__(self, message: str, response: str | None = None) -> None:
+        """Initialize with the problem and the page it was read from."""
+        self.response = response
+        super().__init__(message)
+
+
+# TODO: Validate
+class WrongSeasonError(TrivialMinusError):
+    """Raised when the downloaded episodes are for a different season."""
+
+    # TODO: Validate
+    def __init__(
+        self,
+        season_number: int,
+        response: str | dict[str, Any] | None,
+    ) -> None:
+        """Initialize with the season that was asked for and the response."""
+        self.season_number = season_number
+        self.response = response
+        super().__init__(f"The downloaded file is not for season {season_number}")
+
+
+# TODO: Validate
+class WrongMovieError(TrivialMinusError):
+    """Raised when the downloaded page is for a different movie."""
+
+    # TODO: Validate
+    def __init__(
+        self,
+        movie_id: str,
+        response: str | dict[str, Any] | None,
+    ) -> None:
+        """Initialize with the movie that was asked for and the response."""
+        self.movie_id = movie_id
+        self.response = response
+        super().__init__(f"The downloaded file is not for movie {movie_id}")

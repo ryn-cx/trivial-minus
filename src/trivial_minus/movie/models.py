@@ -1,70 +1,57 @@
-from pydantic import AwareDatetime, ConfigDict, Field
-from good_ass_pydantic_integrator import GAPIBaseModel
+"""MovieModel, strict to a type checker, all-optional at runtime.
 
-class Logo(GAPIBaseModel):
-    model_config = ConfigDict(extra='forbid')
-    field_type: str = Field(..., alias='@type')
-    url: str
+A type checker reads the strict model, so every field carries the type and
+the requiredness the schema recorded. At runtime the all-optional copy is imported
+instead, so a response that has drifted still parses and a field the data is
+missing is None despite what its type hint says.
+"""
 
-class Publisher(GAPIBaseModel):
-    model_config = ConfigDict(extra='forbid')
-    field_context: str = Field(..., alias='@context')
-    field_type: str = Field(..., alias='@type')
-    name: str
-    url: str
-    logo: Logo
+from typing import TYPE_CHECKING
 
-class MainEntityOfPage(GAPIBaseModel):
-    model_config = ConfigDict(extra='forbid')
-    field_type: str = Field(..., alias='@type')
-    field_id: str = Field(..., alias='@id')
+from good_ass_pydantic_integrator import load
 
-class Target(GAPIBaseModel):
-    model_config = ConfigDict(extra='forbid')
-    field_type: str = Field(..., alias='@type')
-    url_template: str = Field(..., alias='urlTemplate')
-    action_platform: str = Field(..., alias='actionPlatform')
-    in_language: str = Field(..., alias='inLanguage')
+from .optional_models import MovieModel as OptionalModel
+from .strict_models import MovieModel as StrictModel
 
-class EligibleRegion(GAPIBaseModel):
-    model_config = ConfigDict(extra='forbid')
-    field_type: str = Field(..., alias='@type')
-    name: str
+if TYPE_CHECKING:
+    from .strict_models import (
+        EligibleRegion,
+        ExpectsAcceptanceOfItem,
+        Logo,
+        MainEntityOfPage,
+        MovieModel,
+        PotentialActionItem,
+        Publisher,
+        Seller,
+        Target,
+    )
+else:
+    from .optional_models import (
+        EligibleRegion,
+        ExpectsAcceptanceOfItem,
+        Logo,
+        MainEntityOfPage,
+        MovieModel,
+        PotentialActionItem,
+        Publisher,
+        Seller,
+        Target,
+    )
 
-class Seller(GAPIBaseModel):
-    model_config = ConfigDict(extra='forbid')
-    field_type: str = Field(..., alias='@type')
-    name: str
-    same_as: str = Field(..., alias='sameAs')
+__all__ = [
+    "EligibleRegion",
+    "ExpectsAcceptanceOfItem",
+    "Logo",
+    "MainEntityOfPage",
+    "MovieModel",
+    "PotentialActionItem",
+    "Publisher",
+    "Seller",
+    "Target",
+    "model_validate_json",
+]
 
-class ExpectsAcceptanceOfItem(GAPIBaseModel):
-    model_config = ConfigDict(extra='forbid')
-    field_type: str = Field(..., alias='@type')
-    category: str
-    availability_starts: AwareDatetime = Field(..., alias='availabilityStarts')
-    availability_ends: AwareDatetime = Field(..., alias='availabilityEnds')
-    eligible_region: EligibleRegion = Field(..., alias='eligibleRegion')
-    name: str
-    price: float
-    price_currency: str = Field(..., alias='priceCurrency')
-    seller: Seller
 
-class PotentialActionItem(GAPIBaseModel):
-    model_config = ConfigDict(extra='forbid')
-    field_type: str = Field(..., alias='@type')
-    target: Target
-    expects_acceptance_of: list[ExpectsAcceptanceOfItem] = Field(..., alias='expectsAcceptanceOf')
-
-class MovieModel(GAPIBaseModel):
-    model_config = ConfigDict(extra='forbid')
-    field_context: str = Field(..., alias='@context')
-    field_type: str = Field(..., alias='@type')
-    name: str
-    description: str
-    date_published: AwareDatetime = Field(..., alias='datePublished')
-    image: str
-    content_rating: str = Field(..., alias='contentRating')
-    genre: str
-    publisher: Publisher
-    main_entity_of_page: MainEntityOfPage = Field(..., alias='mainEntityOfPage')
-    potential_action: list[PotentialActionItem] = Field(..., alias='potentialAction')
+def model_validate_json(data: str | bytes | object, log_id: str) -> MovieModel:
+    """Read a downloaded file into MovieModel."""
+    return load.model_validate_json(StrictModel, OptionalModel, data, log_id)
