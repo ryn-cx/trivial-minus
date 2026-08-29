@@ -66,4 +66,4 @@ class Show(BaseEndpoint):
     # TODO: Validate
     def load(self, data: str, log_id: str = "") -> ShowModel:
         """Read a downloaded show page into its model."""
-        return model_validate_json(extract_show(data), log_id or type(self).__name__)
+        return model_validate_json(extract_show(data), log_id or self.default_log_id)
