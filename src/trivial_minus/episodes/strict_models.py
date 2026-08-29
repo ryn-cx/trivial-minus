@@ -1,13 +1,16 @@
 from typing import Self
 from pydantic import ModelWrapValidatorHandler, PrivateAttr, model_validator
+from pydantic import ConfigDict
 from typing import Any
 from pydantic import AwareDatetime, BaseModel, Field
 
 class Subrating(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     code: str
     description: str
 
 class RegionalRatings(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     region: str
     rating: str
     disclaimer: None
@@ -17,6 +20,7 @@ class RegionalRatings(BaseModel):
     rating_icon: None = Field(..., alias='ratingIcon')
 
 class Thumb(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     large: str
     small: str
     field_640x360: str = Field(..., alias='640x360')
@@ -25,10 +29,12 @@ class Thumb(BaseModel):
     poster: None
 
 class EsturLs(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     amazon: str
     i_tunes: str = Field(..., alias='iTunes')
 
 class RegionalRating(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     region: str
     rating: str
     disclaimer: None
@@ -38,6 +44,7 @@ class RegionalRating(BaseModel):
     rating_icon: None = Field(..., alias='ratingIcon')
 
 class MetaData(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     airdate_iso: AwareDatetime
     airdate_tv: bool
     asset_type: str = Field(..., alias='assetType')
@@ -75,12 +82,14 @@ class MetaData(BaseModel):
     current_listing_title: None = Field(..., alias='currentListingTitle')
 
 class ThumbnailSetItem(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     height: int
     width: int
     asset_type: str = Field(..., alias='assetType')
     url: str
 
 class RegionalRating1(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     region: str
     rating: str
     disclaimer: None
@@ -90,6 +99,7 @@ class RegionalRating1(BaseModel):
     rating_icon: None = Field(..., alias='ratingIcon')
 
 class ApiMetadata(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     genre: str
     status: str
     show_page_url: str = Field(..., alias='showPageUrl')
@@ -130,6 +140,7 @@ class ApiMetadata(BaseModel):
     video_title: str = Field(..., alias='videoTitle')
 
 class Datum(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     type: str
     title: str
     series_title: str
@@ -213,12 +224,14 @@ class Datum(BaseModel):
     lock_level: str = Field(..., alias='lockLevel')
 
 class Result(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     title: str
     data: list[Datum]
     total: int
     display_seasons: bool | None = None
 
 class EpisodesModel(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     result: Result
     success: bool | None = None
     _raw_input: Any = PrivateAttr(default=None)

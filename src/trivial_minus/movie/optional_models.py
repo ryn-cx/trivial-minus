@@ -3,12 +3,12 @@ from pydantic import ModelWrapValidatorHandler, PrivateAttr, model_validator
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 
 class Logo(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     field_type: str | None = Field(None, alias='@type')
     url: str | None = None
 
 class Publisher(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     field_context: str | None = Field(None, alias='@context')
     field_type: str | None = Field(None, alias='@type')
     name: str | None = None
@@ -16,30 +16,30 @@ class Publisher(BaseModel):
     logo: Logo | None = None
 
 class MainEntityOfPage(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     field_type: str | None = Field(None, alias='@type')
     field_id: str | None = Field(None, alias='@id')
 
 class Target(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     field_type: str | None = Field(None, alias='@type')
     url_template: str | None = Field(None, alias='urlTemplate')
     action_platform: str | None = Field(None, alias='actionPlatform')
     in_language: str | None = Field(None, alias='inLanguage')
 
 class EligibleRegion(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     field_type: str | None = Field(None, alias='@type')
     name: str | None = None
 
 class Seller(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     field_type: str | None = Field(None, alias='@type')
     name: str | None = None
     same_as: str | None = Field(None, alias='sameAs')
 
 class ExpectsAcceptanceOfItem(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     field_type: str | None = Field(None, alias='@type')
     category: str | None = None
     availability_starts: AwareDatetime | None = Field(None, alias='availabilityStarts')
@@ -51,13 +51,13 @@ class ExpectsAcceptanceOfItem(BaseModel):
     seller: Seller | None = None
 
 class PotentialActionItem(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     field_type: str | None = Field(None, alias='@type')
     target: Target | None = None
     expects_acceptance_of: list[ExpectsAcceptanceOfItem] | None = Field(None, alias='expectsAcceptanceOf')
 
 class MovieModel(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     field_context: str | None = Field(None, alias='@context')
     field_type: str | None = Field(None, alias='@type')
     name: str | None = None

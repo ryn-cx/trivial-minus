@@ -6,13 +6,12 @@ from __future__ import annotations
 import logging
 
 from get_around import build_client_automatically
-from good_ass_pydantic_integrator import generate_model
 
 from generate.constants import FILES_PATH, TRIVIAL_MINUS_PATH
-from generate.utils import download_if_missing
+from generate.utils import download_if_missing, load_ids, rebuild_model
 from trivial_minus import TrivialMinus
 
-MOVIE_IDS = ["ALVE01KT235XQDEK58R7H2012VNZMK"]
+MOVIE_IDS = load_ids("MovieModel")
 
 
 # TODO: Validate
@@ -25,7 +24,7 @@ def generate_movie(client: TrivialMinus) -> None:
             movie_id,
             lambda movie_id=movie_id: client.movie.download(movie_id),
         )
-    generate_model(FILES_PATH, TRIVIAL_MINUS_PATH, "MovieModel")
+    rebuild_model(FILES_PATH, TRIVIAL_MINUS_PATH, "MovieModel")
 
 
 if __name__ == "__main__":

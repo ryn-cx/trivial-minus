@@ -3,7 +3,7 @@ from pydantic import ModelWrapValidatorHandler, PrivateAttr, model_validator
 from pydantic import BaseModel, ConfigDict
 
 class ShowModel(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     seasons: list[int] | None = None
     _raw_input: Any = PrivateAttr(default=None)
 

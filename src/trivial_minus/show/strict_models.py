@@ -1,8 +1,10 @@
 from typing import Any, Self
 from pydantic import ModelWrapValidatorHandler, PrivateAttr, model_validator
+from pydantic import ConfigDict
 from pydantic import BaseModel
 
 class ShowModel(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     seasons: list[int]
     _raw_input: Any = PrivateAttr(default=None)
 

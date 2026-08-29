@@ -1,12 +1,15 @@
 from typing import Any, Self
 from pydantic import ModelWrapValidatorHandler, PrivateAttr, model_validator
+from pydantic import ConfigDict
 from pydantic import AwareDatetime, BaseModel, Field
 
 class Logo(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     field_type: str = Field(..., alias='@type')
     url: str
 
 class Publisher(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     field_context: str = Field(..., alias='@context')
     field_type: str = Field(..., alias='@type')
     name: str
@@ -14,25 +17,30 @@ class Publisher(BaseModel):
     logo: Logo
 
 class MainEntityOfPage(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     field_type: str = Field(..., alias='@type')
     field_id: str = Field(..., alias='@id')
 
 class Target(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     field_type: str = Field(..., alias='@type')
     url_template: str = Field(..., alias='urlTemplate')
     action_platform: str = Field(..., alias='actionPlatform')
     in_language: str = Field(..., alias='inLanguage')
 
 class EligibleRegion(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     field_type: str = Field(..., alias='@type')
     name: str
 
 class Seller(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     field_type: str = Field(..., alias='@type')
     name: str
     same_as: str = Field(..., alias='sameAs')
 
 class ExpectsAcceptanceOfItem(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     field_type: str = Field(..., alias='@type')
     category: str
     availability_starts: AwareDatetime = Field(..., alias='availabilityStarts')
@@ -44,11 +52,13 @@ class ExpectsAcceptanceOfItem(BaseModel):
     seller: Seller
 
 class PotentialActionItem(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     field_type: str = Field(..., alias='@type')
     target: Target
     expects_acceptance_of: list[ExpectsAcceptanceOfItem] = Field(..., alias='expectsAcceptanceOf')
 
 class MovieModel(BaseModel):
+    model_config = ConfigDict(defer_build=True)
     field_context: str = Field(..., alias='@context')
     field_type: str = Field(..., alias='@type')
     name: str

@@ -6,14 +6,13 @@ from __future__ import annotations
 import logging
 
 from get_around import build_client_automatically
-from good_ass_pydantic_integrator import generate_model
 
 from generate.constants import FILES_PATH, TRIVIAL_MINUS_PATH
-from generate.utils import download_if_missing
+from generate.utils import download_if_missing, load_ids, rebuild_model
 from trivial_minus import TrivialMinus
 from trivial_minus.show.extract import extract_show
 
-SHOW_IDS = ["south-park"]
+SHOW_IDS = load_ids("ShowModel")
 
 
 # TODO: Validate
@@ -29,7 +28,7 @@ def generate_show(client: TrivialMinus) -> None:
         )
     # A show is answered with a page rather than JSON, so the recordings are run
     # through the same extractor the endpoint's `load` uses.
-    generate_model(FILES_PATH, TRIVIAL_MINUS_PATH, "ShowModel", extract_show)
+    rebuild_model(FILES_PATH, TRIVIAL_MINUS_PATH, "ShowModel", extract_show)
 
 
 if __name__ == "__main__":

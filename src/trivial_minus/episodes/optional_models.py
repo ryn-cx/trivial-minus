@@ -4,12 +4,12 @@ from typing import Any
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 
 class Subrating(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     code: str | None = None
     description: str | None = None
 
 class RegionalRatings(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     region: str | None = None
     rating: str | None = None
     disclaimer: Any | None = None
@@ -19,7 +19,7 @@ class RegionalRatings(BaseModel):
     rating_icon: Any | None = Field(None, alias='ratingIcon')
 
 class Thumb(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     large: str | None = None
     small: str | None = None
     field_640x360: str | None = Field(None, alias='640x360')
@@ -28,12 +28,12 @@ class Thumb(BaseModel):
     poster: Any | None = None
 
 class EsturLs(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     amazon: str | None = None
     i_tunes: str | None = Field(None, alias='iTunes')
 
 class RegionalRating(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     region: str | None = None
     rating: str | None = None
     disclaimer: Any | None = None
@@ -43,7 +43,7 @@ class RegionalRating(BaseModel):
     rating_icon: Any | None = Field(None, alias='ratingIcon')
 
 class MetaData(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     airdate_iso: AwareDatetime | None = None
     airdate_tv: bool | None = None
     asset_type: str | None = Field(None, alias='assetType')
@@ -81,14 +81,14 @@ class MetaData(BaseModel):
     current_listing_title: Any | None = Field(None, alias='currentListingTitle')
 
 class ThumbnailSetItem(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     height: int | None = None
     width: int | None = None
     asset_type: str | None = Field(None, alias='assetType')
     url: str | None = None
 
 class RegionalRating1(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     region: str | None = None
     rating: str | None = None
     disclaimer: Any | None = None
@@ -98,7 +98,7 @@ class RegionalRating1(BaseModel):
     rating_icon: Any | None = Field(None, alias='ratingIcon')
 
 class ApiMetadata(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     genre: str | None = None
     status: str | None = None
     show_page_url: str | None = Field(None, alias='showPageUrl')
@@ -139,7 +139,7 @@ class ApiMetadata(BaseModel):
     video_title: str | None = Field(None, alias='videoTitle')
 
 class Datum(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     type: str | None = None
     title: str | None = None
     series_title: str | None = None
@@ -223,14 +223,14 @@ class Datum(BaseModel):
     lock_level: str | None = Field(None, alias='lockLevel')
 
 class Result(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     title: str | None = None
     data: list[Datum] | None = None
     total: int | None = None
     display_seasons: bool | None = None
 
 class EpisodesModel(BaseModel):
-    model_config = ConfigDict(extra='ignore')
+    model_config = ConfigDict(extra='ignore', defer_build=True)
     result: Result | None = None
     success: bool | None = None
     _raw_input: Any = PrivateAttr(default=None)

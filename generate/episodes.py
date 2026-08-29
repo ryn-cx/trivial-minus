@@ -6,13 +6,12 @@ from __future__ import annotations
 import logging
 
 from get_around import build_client_automatically
-from good_ass_pydantic_integrator import generate_model
 
 from generate.constants import FILES_PATH, TRIVIAL_MINUS_PATH
-from generate.utils import download_if_missing
+from generate.utils import download_if_missing, load_ids, rebuild_model
 from trivial_minus import TrivialMinus
 
-SEASONS = [("south-park", 28), ("south-park", 999)]
+SEASONS = load_ids("EpisodesModel")
 """The show and season number each recorded episode list is for."""
 
 
@@ -28,7 +27,12 @@ def generate_episodes(client: TrivialMinus) -> None:
                 client.episodes.download(show_id, season_number=season_number)
             ),
         )
-    generate_model(FILES_PATH, TRIVIAL_MINUS_PATH, "EpisodesModel")
+    rebuild_model(
+        FILES_PATH,
+        TRIVIAL_MINUS_PATH,
+        "EpisodesModel",
+        name_of=lambda season: f"{season[0]}-s{season[1]}",
+    )
 
 
 if __name__ == "__main__":
