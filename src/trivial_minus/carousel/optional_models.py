@@ -3,92 +3,7 @@ from pydantic import ModelWrapValidatorHandler, PrivateAttr, model_validator
 from datetime import time
 from typing import Any
 from uuid import UUID
-from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
-
-class AvailableVideoSeason(BaseModel):
-    model_config = ConfigDict(extra='ignore', defer_build=True)
-    season_num: str | None = Field(None, alias='seasonNum')
-    total_count: int | None = Field(None, alias='totalCount')
-    premium_count: int | None = Field(None, alias='premiumCount')
-    clips_count: int | None = Field(None, alias='clipsCount')
-    delay_count: int | None = Field(None, alias='delayCount')
-    season_premiere_date: Any | None = Field(None, alias='seasonPremiereDate')
-    season_premiere_date_epoch: Any | None = Field(None, alias='seasonPremiereDateEpoch')
-    season_finale_date: Any | None = Field(None, alias='seasonFinaleDate')
-    season_finale_date_epoch: Any | None = Field(None, alias='seasonFinaleDateEpoch')
-
-class ShowAssets(BaseModel):
-    model_config = ConfigDict(extra='ignore', defer_build=True)
-    filepath_show_poster: str | None = None
-    filepath_apple_airplay: str | None = None
-    filepath_mobile_endcard: str | None = None
-    filepath_show_page_header: str | None = None
-    filepath_title_logo_regular: str | None = None
-    filepath_video_endcard_show_image: str | None = None
-    filepath_title_logo_left: str | None = None
-    filepath_apple_centered_background: str | None = None
-    filepath_show_hero_landscape: str | None = None
-    filepath_title_logo_center: str | None = None
-    filepath_ott_hd_show_image_overhang: str | None = None
-    filepath_apple_content_logo_polychromatic: str | None = None
-    filepath_show_browse_poster: str | None = None
-    filepath_show_hero_regular: str | None = None
-    filepath_show_hero_compact: str | None = None
-    filepath_show_hero_portrait: str | None = None
-    filepath_apple_cover_artwork_horizontal: str | None = None
-    filepath_apple_centered_background_small: str | None = None
-    filepath_apple_content_logo_monochromatic: str | None = None
-    filepath_title_logo_compact: str | None = None
-    filepath_apple_top_shelf: str | None = None
-    filepath_partner_brand_logo: str | None = None
-    filepath_brand_hero: str | None = None
-
-class Content(BaseModel):
-    model_config = ConfigDict(extra='ignore', defer_build=True)
-    hub_id: int | None = Field(None, alias='hubId')
-    title: str | None = None
-    hub_slug: str | None = Field(None, alias='hubSlug')
-    type: str | None = None
-    hub_items: Any | None = Field(None, alias='hubItems')
-    page_type: str | None = Field(None, alias='pageType')
-    region: str | None = None
-    locale: str | None = None
-    user_state: Any | list[str] | None = Field(None, alias='userState')
-    live_on_date: int | None = Field(None, alias='liveOnDate')
-    variant_key: Any | None = Field(None, alias='variantKey')
-    show_id: int | None = Field(None, alias='showId')
-    league_id: int | None = Field(None, alias='leagueId')
-    about: str | None = None
-    show_title: str | None = Field(None, alias='showTitle')
-    content_type: str | None = Field(None, alias='contentType')
-    show_path: str | None = Field(None, alias='showPath')
-    tune_in_time: str | None = Field(None, alias='tuneInTime')
-    premium_features: list[Any] | None = Field(None, alias='premiumFeatures')
-    brand_slug: str | None = Field(None, alias='brandSlug')
-    category: str | None = None
-    available_video_seasons: list[AvailableVideoSeason] | None = Field(None, alias='availableVideoSeasons')
-    show_assets: ShowAssets | None = Field(None, alias='showAssets')
-    callbacks: dict[str, Any] | None = None
-    rating: str | None = None
-    first_available_date: AwareDatetime | None = Field(None, alias='firstAvailableDate')
-    is_content_accessible_in_cms: bool | None = Field(None, alias='isContentAccessibleInCMS')
-    required_add_ons: list[Any] | None = Field(None, alias='requiredAddOns')
-    is_after_hours: bool | None = Field(None, alias='isAfterHours')
-    is_kids_content: bool | None = Field(None, alias='isKidsContent')
-    cast_names: list[str] | None = Field(None, alias='castNames')
-    sub_video_starting_point_cta: str | None = Field(None, alias='subVideoStartingPointCTA')
-    genre: str | None = None
-    unified_genre: list[str] | None = Field(None, alias='unifiedGenre')
-    video_preview_url: str | None = Field(None, alias='videoPreviewURL')
-    show_premiere_date_str: AwareDatetime | None = Field(None, alias='showPremiereDateStr')
-
-class ItemPem(BaseModel):
-    model_config = ConfigDict(extra='ignore', defer_build=True)
-    pvr_model: str | None = Field(None, alias='pvrModel')
-    draw_id: UUID | None = Field(None, alias='drawId')
-    p: str | None = None
-    arm_id: UUID | None = Field(None, alias='armId')
-    mab_id: str | None = Field(None, alias='mabId')
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, NaiveDatetime
 
 class ThumbnailSetItem(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
@@ -102,18 +17,13 @@ class DownloadCountrySetItem(BaseModel):
     code: str | None = None
     downloadable: bool | None = None
 
-class Subrating(BaseModel):
-    model_config = ConfigDict(extra='ignore', defer_build=True)
-    code: str | None = None
-    description: str | None = None
-
 class RegionalRating(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
     region: str | None = None
     rating: str | None = None
     disclaimer: Any | None = None
-    secondary_descriptors: str | None = Field(None, alias='secondaryDescriptors')
-    subratings: Any | list[Subrating] | None = None
+    secondary_descriptors: Any | None = Field(None, alias='secondaryDescriptors')
+    subratings: Any | None = None
     consumer_advice: Any | None = Field(None, alias='consumerAdvice')
     rating_icon: Any | None = Field(None, alias='ratingIcon')
 
@@ -201,6 +111,308 @@ class MovieContent(BaseModel):
     playback_events: PlaybackEvents | None = Field(None, alias='playbackEvents')
     embeddable: str | None = None
     copyright: str | None = None
+    add_ons: list[Any] | None = Field(None, alias='addOns')
+    regional_audio_exclude_languages: list[Any] | None = Field(None, alias='regionalAudioExcludeLanguages')
+    regional_text_exclude_languages: list[Any] | None = Field(None, alias='regionalTextExcludeLanguages')
+    original_release_year: int | None = Field(None, alias='originalReleaseYear')
+    tmsprogram_id: str | None = Field(None, alias='tmsprogramID')
+    is_content_accessible_in_can: bool | None = Field(None, alias='isContentAccessibleInCAN')
+    tmsseries_id: str | None = Field(None, alias='tmsseriesID')
+    thumbnail_sheet_set: list[ThumbnailSheetSetItem] | None = Field(None, alias='thumbnailSheetSet')
+    v_tag: str | None = Field(None, alias='vTag')
+    is_product_placement: bool | None = Field(None, alias='isProductPlacement')
+
+class PlaybackEvents1(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    end_credit_chapter_time_ms: Any | None = Field(None, alias='endCreditChapterTimeMs')
+    preview_start_time_ms: Any | None = Field(None, alias='previewStartTimeMs')
+    preview_end_time_ms: Any | None = Field(None, alias='previewEndTimeMs')
+    open_credit_end_time_ms: Any | None = Field(None, alias='openCreditEndTimeMs')
+    open_credit_start_time: Any | None = Field(None, alias='openCreditStartTime')
+
+class TrailerContent(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    genre: str | None = None
+    status: str | None = None
+    field_first_ingest_date: str | None = Field(None, alias='_firstIngestDate')
+    expired: bool | None = None
+    show_page_url: str | None = Field(None, alias='showPageUrl')
+    cbs_show_id: int | None = Field(None, alias='cbsShowId')
+    primary_category: str | None = Field(None, alias='primaryCategory')
+    primary_category_name: str | None = Field(None, alias='primaryCategoryName')
+    edit_date: int | None = Field(None, alias='editDate')
+    field_edit_date: str | None = Field(None, alias='_editDate')
+    field_last_modified_date: str | None = Field(None, alias='_lastModifiedDate')
+    ingest_date: int | None = Field(None, alias='ingestDate')
+    air_date: int | None = Field(None, alias='airDate')
+    description: str | None = None
+    short_description: str | None = Field(None, alias='shortDescription')
+    pub_date: int | None = Field(None, alias='pubDate')
+    label: str | None = None
+    video_page_url: str | None = Field(None, alias='videoPageUrl')
+    url: str | None = None
+    asset_type: str | None = Field(None, alias='assetType')
+    first_ingest_date: int | None = Field(None, alias='firstIngestDate')
+    category: str | None = None
+    top_level_category: str | None = Field(None, alias='topLevelCategory')
+    full_episode: bool | None = Field(None, alias='fullEpisode')
+    exclusive: bool | None = None
+    content_id: str | None = Field(None, alias='contentId')
+    title: str | None = None
+    field_ingest_date: str | None = Field(None, alias='_ingestDate')
+    episode_num: str | None = Field(None, alias='episodeNum')
+    field_pub_date: str | None = Field(None, alias='_pubDate')
+    season_num: str | None = Field(None, alias='seasonNum')
+    brand: str | None = None
+    child_content_id: str | None = Field(None, alias='childContentId')
+    sizzle_id: str | None = Field(None, alias='sizzleId')
+    pid: UUID | None = None
+    series_title: str | None = Field(None, alias='seriesTitle')
+    field_air_date: str | None = Field(None, alias='_airDate')
+    duration: int | None = None
+    last_modified_date: int | None = Field(None, alias='lastModifiedDate')
+    rating: str | None = None
+    device_type: str | None = Field(None, alias='deviceType')
+    thumbnail: str | None = None
+    amazon_esturl: str | None = Field(None, alias='amazonESTURL')
+    itunes_esturl: str | None = Field(None, alias='itunesESTURL')
+    streaming_url: str | None = Field(None, alias='streamingUrl')
+    expiration_date: int | None = Field(None, alias='expirationDate')
+    field_expiration_date: str | None = Field(None, alias='_expirationDate')
+    field_pub_date_iso: AwareDatetime | None = Field(None, alias='_pubDateISO')
+    field_air_date_iso: AwareDatetime | None = Field(None, alias='_airDateISO')
+    player_loc_url: str | None = Field(None, alias='playerLocUrl')
+    subscription_level: str | None = Field(None, alias='subscriptionLevel')
+    media_available_date: AwareDatetime | None = Field(None, alias='mediaAvailableDate')
+    media_available_date_epoch: int | None = Field(None, alias='mediaAvailableDateEpoch')
+    closed_caption_url: str | None = Field(None, alias='closedCaptionUrl')
+    is_live: bool | None = Field(None, alias='isLive')
+    cms_account_id: str | None = Field(None, alias='cmsAccountId')
+    apple_watch_list_show_key: str | None = Field(None, alias='appleWatchListShowKey')
+    is_protected: bool | None = Field(None, alias='isProtected')
+    media_type: str | None = Field(None, alias='mediaType')
+    exclude_nielsen_tracking: bool | None = Field(None, alias='excludeNielsenTracking')
+    end_credits_chapter_time: str | None = Field(None, alias='endCreditsChapterTime')
+    thumbnail_set: list[ThumbnailSetItem] | None = Field(None, alias='thumbnailSet')
+    download_country_set: list[Any] | None = Field(None, alias='downloadCountrySet')
+    regional_ratings: list[RegionalRating] | None = Field(None, alias='regionalRatings')
+    premium_features: list[str] | None = Field(None, alias='premiumFeatures')
+    video_properties: list[str] | None = Field(None, alias='videoProperties')
+    aspect_ratio: str | None = Field(None, alias='aspectRatio')
+    external_id: str | None = Field(None, alias='externalId')
+    available_for_profile_types: list[str] | None = Field(None, alias='availableForProfileTypes')
+    playback_events: PlaybackEvents1 | None = Field(None, alias='playbackEvents')
+    embeddable: str | None = None
+    copyright: str | None = None
+    add_ons: list[Any] | None = Field(None, alias='addOns')
+    regional_audio_exclude_languages: list[Any] | None = Field(None, alias='regionalAudioExcludeLanguages')
+    regional_text_exclude_languages: list[Any] | None = Field(None, alias='regionalTextExcludeLanguages')
+    original_release_year: int | None = Field(None, alias='originalReleaseYear')
+    tmsprogram_id: str | None = Field(None, alias='tmsprogramID')
+    is_content_accessible_in_can: bool | None = Field(None, alias='isContentAccessibleInCAN')
+    tmsseries_id: str | None = Field(None, alias='tmsseriesID')
+    thumbnail_sheet_set: list[ThumbnailSheetSetItem] | None = Field(None, alias='thumbnailSheetSet')
+    v_tag: str | None = Field(None, alias='vTag')
+    is_product_placement: bool | None = Field(None, alias='isProductPlacement')
+
+class MovieAssets(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    filepath_movie_keep_watching: str | None = None
+    filepath_movie_poster: str | None = None
+    filepath_title_logo_regular: str | None = None
+    filepath_movie_logo: str | None = None
+    filepath_movie_hero_regular: str | None = None
+    filepath_movie_hero: str | None = None
+    filepath_partner_movie_poster: str | None = None
+    filepath_title_logo_left: str | None = None
+    filepath_movie_hero_compact: str | None = None
+    filepath_title_logo_center: str | None = None
+    filepath_title_logo_compact: str | None = None
+
+class AvailableVideoSeason(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    season_num: str | None = Field(None, alias='seasonNum')
+    total_count: int | None = Field(None, alias='totalCount')
+    premium_count: int | None = Field(None, alias='premiumCount')
+    clips_count: int | None = Field(None, alias='clipsCount')
+    delay_count: int | None = Field(None, alias='delayCount')
+    season_premiere_date: Any | None = Field(None, alias='seasonPremiereDate')
+    season_premiere_date_epoch: Any | None = Field(None, alias='seasonPremiereDateEpoch')
+    season_finale_date: Any | None = Field(None, alias='seasonFinaleDate')
+    season_finale_date_epoch: Any | None = Field(None, alias='seasonFinaleDateEpoch')
+
+class ShowAssets(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    filepath_show_poster: str | None = None
+    filepath_apple_airplay: str | None = None
+    filepath_mobile_endcard: str | None = None
+    filepath_show_page_header: str | None = None
+    filepath_title_logo_regular: str | None = None
+    filepath_video_endcard_show_image: str | None = None
+    filepath_title_logo_left: str | None = None
+    filepath_apple_centered_background: str | None = None
+    filepath_show_hero_landscape: str | None = None
+    filepath_title_logo_center: str | None = None
+    filepath_ott_hd_show_image_overhang: str | None = None
+    filepath_apple_content_logo_polychromatic: str | None = None
+    filepath_show_browse_poster: str | None = None
+    filepath_show_hero_regular: str | None = None
+    filepath_show_hero_compact: str | None = None
+    filepath_show_hero_portrait: str | None = None
+    filepath_apple_cover_artwork_horizontal: str | None = None
+    filepath_apple_centered_background_small: str | None = None
+    filepath_apple_content_logo_monochromatic: str | None = None
+    filepath_title_logo_compact: str | None = None
+    filepath_apple_top_shelf: str | None = None
+    filepath_partner_brand_logo: str | None = None
+    filepath_brand_hero: str | None = None
+
+class Content(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    hub_id: int | None = Field(None, alias='hubId')
+    title: str | None = None
+    hub_slug: str | None = Field(None, alias='hubSlug')
+    type: str | None = None
+    hub_items: Any | None = Field(None, alias='hubItems')
+    page_type: str | None = Field(None, alias='pageType')
+    region: str | None = None
+    locale: str | None = None
+    user_state: Any | list[str] | None = Field(None, alias='userState')
+    live_on_date: int | None = Field(None, alias='liveOnDate')
+    variant_key: Any | None = Field(None, alias='variantKey')
+    id: int | None = None
+    content_id: str | None = Field(None, alias='contentId')
+    content_type: str | None = Field(None, alias='contentType')
+    trailer_content_id: str | None = Field(None, alias='trailerContentId')
+    movie_content: MovieContent | None = Field(None, alias='movieContent')
+    trailer_content: TrailerContent | None = Field(None, alias='trailerContent')
+    tune_in_time: str | None = Field(None, alias='tuneInTime')
+    movie_assets: MovieAssets | None = Field(None, alias='movieAssets')
+    is_movie_available: bool | None = Field(None, alias='isMovieAvailable')
+    first_available_date: AwareDatetime | None = Field(None, alias='firstAvailableDate')
+    cast_names: list[str] | None = Field(None, alias='castNames')
+    rating: str | list[str] | None = None
+    is_content_accessible_in_cms: bool | None = Field(None, alias='isContentAccessibleInCMS')
+    required_add_ons: list[Any] | None = Field(None, alias='requiredAddOns')
+    is_after_hours: bool | None = Field(None, alias='isAfterHours')
+    is_kids_content: bool | None = Field(None, alias='isKidsContent')
+    genre: str | None = None
+    unified_genre: list[str] | None = Field(None, alias='unifiedGenre')
+    video_preview_url: str | None = Field(None, alias='videoPreviewURL')
+    show_id: int | None = Field(None, alias='showId')
+    league_id: int | None = Field(None, alias='leagueId')
+    about: str | None = None
+    show_title: str | None = Field(None, alias='showTitle')
+    show_path: str | None = Field(None, alias='showPath')
+    premium_features: list[Any] | None = Field(None, alias='premiumFeatures')
+    brand_slug: str | None = Field(None, alias='brandSlug')
+    category: str | None = None
+    available_video_seasons: list[AvailableVideoSeason] | None = Field(None, alias='availableVideoSeasons')
+    show_assets: ShowAssets | None = Field(None, alias='showAssets')
+    callbacks: dict[str, Any] | None = None
+    sub_video_starting_point_cta: str | None = Field(None, alias='subVideoStartingPointCTA')
+    show_premiere_date_str: NaiveDatetime | None = Field(None, alias='showPremiereDateStr')
+
+class ItemPem(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    pvr_model: str | None = Field(None, alias='pvrModel')
+    draw_id: UUID | None = Field(None, alias='drawId')
+    p: str | None = None
+    arm_id: UUID | None = Field(None, alias='armId')
+    mab_id: str | None = Field(None, alias='mabId')
+
+class Subrating(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    code: str | None = None
+    description: str | None = None
+
+class RegionalRating2(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    region: str | None = None
+    rating: str | None = None
+    disclaimer: Any | None = None
+    secondary_descriptors: str | None = Field(None, alias='secondaryDescriptors')
+    subratings: Any | list[Subrating] | None = None
+    consumer_advice: Any | None = Field(None, alias='consumerAdvice')
+    rating_icon: Any | None = Field(None, alias='ratingIcon')
+
+class PlaybackEvents2(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    end_credit_chapter_time_ms: int | None = Field(None, alias='endCreditChapterTimeMs')
+    preview_start_time_ms: Any | None = Field(None, alias='previewStartTimeMs')
+    preview_end_time_ms: Any | None = Field(None, alias='previewEndTimeMs')
+    open_credit_end_time_ms: Any | None = Field(None, alias='openCreditEndTimeMs')
+    open_credit_start_time: Any | None = Field(None, alias='openCreditStartTime')
+
+class MovieContent1(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    genre: str | None = None
+    status: str | None = None
+    field_first_ingest_date: str | None = Field(None, alias='_firstIngestDate')
+    expired: bool | None = None
+    show_page_url: str | None = Field(None, alias='showPageUrl')
+    cbs_show_id: int | None = Field(None, alias='cbsShowId')
+    primary_category: str | None = Field(None, alias='primaryCategory')
+    primary_category_name: str | None = Field(None, alias='primaryCategoryName')
+    edit_date: int | None = Field(None, alias='editDate')
+    field_edit_date: str | None = Field(None, alias='_editDate')
+    field_last_modified_date: str | None = Field(None, alias='_lastModifiedDate')
+    ingest_date: int | None = Field(None, alias='ingestDate')
+    air_date: int | None = Field(None, alias='airDate')
+    description: str | None = None
+    short_description: str | None = Field(None, alias='shortDescription')
+    pub_date: int | None = Field(None, alias='pubDate')
+    label: str | None = None
+    url: str | None = None
+    asset_type: str | None = Field(None, alias='assetType')
+    first_ingest_date: int | None = Field(None, alias='firstIngestDate')
+    category: str | None = None
+    top_level_category: str | None = Field(None, alias='topLevelCategory')
+    full_episode: bool | None = Field(None, alias='fullEpisode')
+    exclusive: bool | None = None
+    content_id: str | None = Field(None, alias='contentId')
+    title: str | None = None
+    field_ingest_date: str | None = Field(None, alias='_ingestDate')
+    episode_num: str | None = Field(None, alias='episodeNum')
+    field_pub_date: str | None = Field(None, alias='_pubDate')
+    season_num: str | None = Field(None, alias='seasonNum')
+    brand: str | None = None
+    child_content_id: str | None = Field(None, alias='childContentId')
+    sizzle_id: str | None = Field(None, alias='sizzleId')
+    series_title: str | None = Field(None, alias='seriesTitle')
+    field_air_date: str | None = Field(None, alias='_airDate')
+    duration: int | None = None
+    last_modified_date: int | None = Field(None, alias='lastModifiedDate')
+    rating: str | None = None
+    device_type: str | None = Field(None, alias='deviceType')
+    thumbnail: str | None = None
+    amazon_esturl: str | None = Field(None, alias='amazonESTURL')
+    itunes_esturl: str | None = Field(None, alias='itunesESTURL')
+    expiration_date: int | None = Field(None, alias='expirationDate')
+    field_expiration_date: str | None = Field(None, alias='_expirationDate')
+    field_pub_date_iso: AwareDatetime | None = Field(None, alias='_pubDateISO')
+    field_air_date_iso: AwareDatetime | None = Field(None, alias='_airDateISO')
+    subscription_level: str | None = Field(None, alias='subscriptionLevel')
+    media_available_date: AwareDatetime | None = Field(None, alias='mediaAvailableDate')
+    media_available_date_epoch: int | None = Field(None, alias='mediaAvailableDateEpoch')
+    is_live: bool | None = Field(None, alias='isLive')
+    cms_account_id: str | None = Field(None, alias='cmsAccountId')
+    apple_watch_list_show_key: str | None = Field(None, alias='appleWatchListShowKey')
+    is_protected: bool | None = Field(None, alias='isProtected')
+    media_type: str | None = Field(None, alias='mediaType')
+    exclude_nielsen_tracking: bool | None = Field(None, alias='excludeNielsenTracking')
+    end_credits_chapter_time: time | None = Field(None, alias='endCreditsChapterTime')
+    thumbnail_set: list[ThumbnailSetItem] | None = Field(None, alias='thumbnailSet')
+    download_country_set: list[DownloadCountrySetItem] | None = Field(None, alias='downloadCountrySet')
+    regional_ratings: list[RegionalRating2] | None = Field(None, alias='regionalRatings')
+    premium_features: list[str] | None = Field(None, alias='premiumFeatures')
+    video_properties: list[str] | None = Field(None, alias='videoProperties')
+    aspect_ratio: str | None = Field(None, alias='aspectRatio')
+    external_id: str | None = Field(None, alias='externalId')
+    available_for_profile_types: list[str] | None = Field(None, alias='availableForProfileTypes')
+    playback_events: PlaybackEvents2 | None = Field(None, alias='playbackEvents')
+    embeddable: str | None = None
+    copyright: str | None = None
     add_ons: list[str] | None = Field(None, alias='addOns')
     regional_audio_exclude_languages: list[Any] | None = Field(None, alias='regionalAudioExcludeLanguages')
     regional_text_exclude_languages: list[Any] | None = Field(None, alias='regionalTextExcludeLanguages')
@@ -214,7 +426,7 @@ class MovieContent(BaseModel):
     brand_slug: str | None = Field(None, alias='brandSlug')
     is_movie_available: bool | None = Field(None, alias='isMovieAvailable')
 
-class RegionalRating1(BaseModel):
+class RegionalRating3(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
     region: str | None = None
     rating: str | None = None
@@ -224,7 +436,7 @@ class RegionalRating1(BaseModel):
     consumer_advice: Any | None = Field(None, alias='consumerAdvice')
     rating_icon: Any | None = Field(None, alias='ratingIcon')
 
-class PlaybackEvents1(BaseModel):
+class PlaybackEvents3(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
     end_credit_chapter_time_ms: Any | None = Field(None, alias='endCreditChapterTimeMs')
     preview_start_time_ms: Any | None = Field(None, alias='previewStartTimeMs')
@@ -232,7 +444,7 @@ class PlaybackEvents1(BaseModel):
     open_credit_end_time_ms: Any | None = Field(None, alias='openCreditEndTimeMs')
     open_credit_start_time: Any | None = Field(None, alias='openCreditStartTime')
 
-class TrailerContent(BaseModel):
+class TrailerContent1(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
     genre: str | None = None
     status: str | None = None
@@ -297,13 +509,13 @@ class TrailerContent(BaseModel):
     end_credits_chapter_time: str | None = Field(None, alias='endCreditsChapterTime')
     thumbnail_set: list[ThumbnailSetItem] | None = Field(None, alias='thumbnailSet')
     download_country_set: list[DownloadCountrySetItem] | None = Field(None, alias='downloadCountrySet')
-    regional_ratings: list[RegionalRating1] | None = Field(None, alias='regionalRatings')
+    regional_ratings: list[RegionalRating3] | None = Field(None, alias='regionalRatings')
     premium_features: list[str] | None = Field(None, alias='premiumFeatures')
     video_properties: list[str] | None = Field(None, alias='videoProperties')
     aspect_ratio: str | None = Field(None, alias='aspectRatio')
     external_id: str | None = Field(None, alias='externalId')
     available_for_profile_types: list[str] | None = Field(None, alias='availableForProfileTypes')
-    playback_events: PlaybackEvents1 | None = Field(None, alias='playbackEvents')
+    playback_events: PlaybackEvents3 | None = Field(None, alias='playbackEvents')
     embeddable: str | None = None
     copyright: str | None = None
     add_ons: list[str] | None = Field(None, alias='addOns')
@@ -337,6 +549,14 @@ class Button(BaseModel):
     episode: int | None = None
     url: str | None = None
     play: bool | None = None
+
+class WatchListCtaContent(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    content_id: str | None = None
+    content_type: str | None = None
+    title: str | None = None
+    series_title: str | None = None
+    genre: str | None = None
 
 class Datum(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
@@ -389,8 +609,8 @@ class Datum(BaseModel):
     show_or_movie: str | None = Field(None, alias='showOrMovie')
     show_title: str | None = Field(None, alias='showTitle')
     about: str | None = None
-    movie_content: Any | MovieContent | None = Field(None, alias='movieContent')
-    trailer_content: Any | TrailerContent | None = Field(None, alias='trailerContent')
+    movie_content: Any | MovieContent1 | None = Field(None, alias='movieContent')
+    trailer_content: Any | TrailerContent1 | None = Field(None, alias='trailerContent')
     video_preview_url: str | None = Field(None, alias='videoPreviewURL')
     data_tracking: str | None = Field(None, alias='dataTracking')
     show_series_title: str | None = Field(None, alias='showSeriesTitle')
@@ -437,10 +657,78 @@ class Datum(BaseModel):
     deep_link_url: str | None = Field(None, alias='deepLinkUrl')
     hub_id: int | None = Field(None, alias='hubId')
     content_locked: int | str | None = Field(None, alias='contentLocked')
+    show_movie_id: str | None = Field(None, alias='showMovieId')
+    action_url: str | None = Field(None, alias='actionUrl')
+    series_title: str | None = Field(None, alias='seriesTitle')
+    series_id: int | None = Field(None, alias='seriesId')
+    episode_title: str | None = Field(None, alias='episodeTitle')
+    episode_id: str | None = Field(None, alias='episodeId')
+    season_number: str | None = Field(None, alias='seasonNumber')
+    is_hub_carousel: bool | None = Field(None, alias='isHubCarousel')
+    video_id: str | None = Field(None, alias='videoId')
+    available_date: str | None = Field(None, alias='availableDate')
+    show_countdown_timer: bool | None = Field(None, alias='showCountdownTimer')
+    start_timestamp: str | None = Field(None, alias='startTimestamp')
+    end_timestamp: str | None = Field(None, alias='endTimestamp')
+    stream_start_timestamp: str | None = Field(None, alias='streamStartTimestamp')
+    stream_end_timestamp: str | None = Field(None, alias='streamEndTimestamp')
+    thumbnail: str | None = None
+    sizzle_content_id: str | None = Field(None, alias='sizzleContentId')
+    video_preview_id: str | None = Field(None, alias='videoPreviewId')
+    notify_on: bool | None = Field(None, alias='notifyOn')
+    watch_list_cta_content: WatchListCtaContent | None = Field(None, alias='watchListCtaContent')
+    cta_text: str | None = Field(None, alias='ctaText')
     show_series_id: int | str | None = Field(None, alias='showSeriesId')
     filepath1x1_default_image: str | None = Field(None, alias='filepath1x1DefaultImage')
     filepath1x1_focus_state_image: str | None = Field(None, alias='filepath1x1FocusStateImage')
     movie_title: str | None = Field(None, alias='movieTitle')
+
+class Data(BaseModel):
+    model_config = ConfigDict(extra='ignore', defer_build=True)
+    id: int | None = None
+    origin_id: int | None = Field(None, alias='originId')
+    slug: str | None = None
+    channel_name: str | None = Field(None, alias='channelName')
+    description: Any | None = None
+    timezone: str | None = None
+    file_path_logo: str | None = Field(None, alias='filePathLogo')
+    file_path_logo_selected: str | None = Field(None, alias='filePathLogoSelected')
+    file_path_small_logo: str | None = Field(None, alias='filePathSmallLogo')
+    file_path_small_logo_selected: str | None = Field(None, alias='filePathSmallLogoSelected')
+    prg_svc_id: int | None = Field(None, alias='prgSvcId')
+    ptv_id: Any | None = Field(None, alias='ptvId')
+    city: Any | None = None
+    state: Any | None = None
+    postal_code: Any | None = Field(None, alias='postalCode')
+    dma: Any | None = None
+    display_order: int | None = Field(None, alias='displayOrder')
+    filepath_fallback_image: Any | None = Field(None, alias='filepathFallbackImage')
+    provider_type: str | None = Field(None, alias='providerType')
+    cbs_packages: list[str] | None = Field(None, alias='cbsPackages')
+    video_content_id: UUID | None = Field(None, alias='videoContentId')
+    stream_type: str | None = Field(None, alias='streamType')
+    display_metadata: bool | None = Field(None, alias='displayMetadata')
+    promo_content_type: Any | None = Field(None, alias='promoContentType')
+    promo_content_id: Any | None = Field(None, alias='promoContentId')
+    promo_title: Any | None = Field(None, alias='promoTitle')
+    filepath_promo_thumbnail: Any | None = Field(None, alias='filepathPromoThumbnail')
+    channel_category_slugs: list[str] | None = Field(None, alias='channelCategorySlugs')
+    filepath_live_end_card_image: Any | None = Field(None, alias='filepathLiveEndCardImage')
+    channel_types: list[str] | None = Field(None, alias='channelTypes')
+    display_style: str | None = Field(None, alias='displayStyle')
+    sort_theme: str | None = Field(None, alias='sortTheme')
+    current_listing: Any | None = Field(None, alias='currentListing')
+    upcoming_listing: list[Any] | None = Field(None, alias='upcomingListing')
+    brand: Any | None = None
+    total_number_of_current_listings: int | None = Field(None, alias='totalNumberOfCurrentListings')
+    total_number_of_upcoming_listings: int | None = Field(None, alias='totalNumberOfUpcomingListings')
+    entitlement_codes: Any | None = Field(None, alias='entitlementCodes')
+    display_count_down_timer: bool | None = Field(None, alias='displayCountDownTimer')
+    required_add_ons: list[Any] | None = Field(None, alias='requiredAddOns')
+    enable_dashdrm: bool | None = Field(None, alias='enableDASHDRM')
+    kids_mode: bool | None = Field(None, alias='kidsMode')
+    local: bool | None = None
+    is_content_accessible_in_cms: bool | None = Field(None, alias='isContentAccessibleInCMS')
 
 class CarouselModel(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
@@ -451,7 +739,7 @@ class CarouselModel(BaseModel):
     right_arrow: str | None = Field(None, alias='rightArrow')
     display_id: UUID | str | None = Field(None, alias='displayId', union_mode='left_to_right')
     reco_id: UUID | str | None = Field(None, alias='recoId', union_mode='left_to_right')
-    data: list[Datum] | None = None
+    data: list[Datum] | Data | None = None
     carousel_id: UUID | str | None = Field(None, alias='carouselId', union_mode='left_to_right')
     model: str | None = None
     rank_model: str | None = None
