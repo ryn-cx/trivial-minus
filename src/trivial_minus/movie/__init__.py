@@ -4,11 +4,11 @@
 from __future__ import annotations
 
 import json
-import re
 from logging import NullHandler, getLogger
 from typing import Any
 
 from trivial_minus.base_api_endpoint import BaseEndpoint
+from trivial_minus.constants import LD_JSON_RE
 from trivial_minus.exceptions import (
     ExtractionError,
     MovieNotFoundError,
@@ -20,16 +20,10 @@ from trivial_minus.movie.models import MovieModel, model_validate_json
 logger = getLogger(__name__)
 logger.addHandler(NullHandler())
 
-LD_JSON_RE = re.compile(
-    r'<script type="application/ld\+json">(?P<json>.*?)</script>',
-    re.DOTALL,
-)
-"""The schema.org blocks a page carries, one of which describes the movie."""
-
 
 # TODO: Validate
 class Movie(BaseEndpoint):
-    """Manage the movie file.
+    """Contains the movie.
 
     The site serves no JSON for a movie, so what is downloaded is the page and
     what is kept is the schema.org block written into it for search engines.
@@ -52,7 +46,7 @@ class Movie(BaseEndpoint):
 
     # TODO: Validate
     def __call__(self, movie_id: str) -> MovieModel:
-        """Look the movie up and return the model it is read into."""
+        """Download and parse the movie file."""
         log_id = self.get_log_id(self.__call__, locals())
         return self.load(self.download(movie_id), log_id)
 
@@ -95,5 +89,5 @@ class Movie(BaseEndpoint):
 
     # TODO: Validate
     def load(self, data: str, log_id: str = "") -> MovieModel:
-        """Read a downloaded movie file into its model."""
+        """Load a movie file into its model."""
         return model_validate_json(data, log_id or self.default_log_id)

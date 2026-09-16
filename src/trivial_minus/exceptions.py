@@ -107,3 +107,19 @@ class WrongMovieError(TrivialMinusError):
         self.movie_id = movie_id
         self.response = response
         super().__init__(f"The downloaded file is not for movie {movie_id}")
+
+
+# TODO: Validate
+class SectionNotFoundError(TrivialMinusError):
+    """Raised when the requested section does not exist."""
+
+    # TODO: Validate
+    def __init__(
+        self,
+        section_id: int,
+        response: str | dict[str, Any] | None,
+    ) -> None:
+        """Initialize with the section id and the originating response."""
+        self.section_id = section_id
+        self.response = response
+        super().__init__(f"There is no section {section_id}")

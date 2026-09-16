@@ -29,4 +29,11 @@ for episode in episodes.result.data:
 
 movie = client.movie("ALVE01KT235XQDEK58R7H2012VNZMK")
 print(movie.name, movie.content_rating)
+
+# A section is one of the video carousels on a show page, such as Clips.
+for listed_section in show.sections:
+    section = client.section("south-park", section_id=listed_section.id)
+    print(section.title, section.total)
+    for video in section.data:
+        print(video.title, video.content_id)
 ```

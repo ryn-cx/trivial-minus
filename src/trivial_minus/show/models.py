@@ -15,15 +15,48 @@ from .strict_models import ShowModel as StrictModel
 
 if TYPE_CHECKING:
     from .strict_models import (
+        Broadcaster,
+        ContainsSeason,
+        EpisodeItem,
+        PotentialActionItem,
+        PublicationItem,
+        PublishedOn,
+        Recommendation,
+        Section,
+        Series,
+        Show,
         ShowModel,
+        Target,
     )
 else:
     from .optional_models import (
+        Broadcaster,
+        ContainsSeason,
+        EpisodeItem,
+        PotentialActionItem,
+        PublicationItem,
+        PublishedOn,
+        Recommendation,
+        Section,
+        Series,
+        Show,
         ShowModel,
+        Target,
     )
 
 __all__ = [
+    "Broadcaster",
+    "ContainsSeason",
+    "EpisodeItem",
+    "PotentialActionItem",
+    "PublicationItem",
+    "PublishedOn",
+    "Recommendation",
+    "Section",
+    "Series",
+    "Show",
     "ShowModel",
+    "Target",
     "model_validate_json",
 ]
 

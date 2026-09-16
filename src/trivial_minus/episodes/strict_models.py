@@ -223,17 +223,12 @@ class Datum(BaseModel):
     display_description: str = Field(..., alias='displayDescription')
     lock_level: str = Field(..., alias='lockLevel')
 
-class Result(BaseModel):
+class EpisodesModel(BaseModel):
     model_config = ConfigDict(defer_build=True)
     title: str
     data: list[Datum]
     total: int
     display_seasons: bool | None = None
-
-class EpisodesModel(BaseModel):
-    model_config = ConfigDict(defer_build=True)
-    result: Result
-    success: bool | None = None
     _raw_input: Any = PrivateAttr(default=None)
 
     @model_validator(mode='wrap')

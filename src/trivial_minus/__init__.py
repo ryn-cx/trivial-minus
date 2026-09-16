@@ -13,6 +13,7 @@ from get_around import GetAround
 from trivial_minus.episodes import Episodes
 from trivial_minus.exceptions import HTTPError, ResourceNotFoundError
 from trivial_minus.movie import Movie
+from trivial_minus.section import Section
 from trivial_minus.show import Show
 
 logger = getLogger(__name__)
@@ -50,6 +51,7 @@ class TrivialMinus:
         self.show = Show(self)
         self.episodes = Episodes(self)
         self.movie = Movie(self)
+        self.section = Section(self)
 
     # TODO: Validate
     def json_headers(self, referer: str) -> dict[str, str]:

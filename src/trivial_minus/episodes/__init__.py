@@ -5,12 +5,14 @@ from __future__ import annotations
 
 import json
 from logging import NullHandler, getLogger
+from typing import Any
 
 from trivial_minus.base_api_endpoint import BaseEndpoint
 from trivial_minus.episodes.models import EpisodesModel, model_validate_json
 from trivial_minus.exceptions import (
     ResourceNotFoundError,
     ShowNotFoundError,
+    TrivialMinusError,
     WrongSeasonError,
 )
 
@@ -21,8 +23,18 @@ SIZE = 18
 
 
 # TODO: Validate
+def extract_episodes(response: str) -> dict[str, Any]:
+    """Extract the episodes from the Episodes response."""
+    if result := json.loads(response)["result"]:
+        return result
+
+    msg = "The response has no episodes in it"
+    raise TrivialMinusError(msg)
+
+
+# TODO: Validate
 class Episodes(BaseEndpoint):
-    """Manage the season episodes file.
+    """Contains the season episodes.
 
     Source: https://www.paramountplus.com/shows/{show_id}/
 
@@ -50,7 +62,7 @@ class Episodes(BaseEndpoint):
         page: int = 0,
         size: int = SIZE,
     ) -> EpisodesModel:
-        """Look the season's episodes up and return the model they are read into."""
+        """Download and parse the season's episodes file."""
         log_id = self.get_log_id(self.__call__, locals())
         return self.load(
             self.download(show_id, season_number=season_number, page=page, size=size),
@@ -101,5 +113,8 @@ class Episodes(BaseEndpoint):
 
     # TODO: Validate
     def load(self, data: str, log_id: str = "") -> EpisodesModel:
-        """Read a downloaded season episodes file into its model."""
-        return model_validate_json(data, log_id or self.default_log_id)
+        """Load a season episodes file into its model."""
+        return model_validate_json(
+            extract_episodes(data),
+            log_id or self.default_log_id,
+        )
