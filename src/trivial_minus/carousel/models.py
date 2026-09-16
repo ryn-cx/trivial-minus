@@ -24,10 +24,13 @@ if TYPE_CHECKING:
         ItemPem,
         MovieContent,
         PlaybackEvents,
+        PlaybackEvents1,
         RegionalRating,
+        RegionalRating1,
         Subrating,
         ThumbnailSetItem,
         ThumbnailSheetSetItem,
+        TrailerContent,
     )
 else:
     from .optional_models import (
@@ -40,10 +43,13 @@ else:
         ItemPem,
         MovieContent,
         PlaybackEvents,
+        PlaybackEvents1,
         RegionalRating,
+        RegionalRating1,
         Subrating,
         ThumbnailSetItem,
         ThumbnailSheetSetItem,
+        TrailerContent,
     )
 
 __all__ = [
@@ -56,10 +62,13 @@ __all__ = [
     "ItemPem",
     "MovieContent",
     "PlaybackEvents",
+    "PlaybackEvents1",
     "RegionalRating",
+    "RegionalRating1",
     "Subrating",
     "ThumbnailSetItem",
     "ThumbnailSheetSetItem",
+    "TrailerContent",
     "model_validate_json",
 ]
 
