@@ -10,6 +10,9 @@ from typing import Any
 
 from get_around import GetAround
 
+from trivial_minus.carousel import Carousel
+from trivial_minus.collection import Collection
+from trivial_minus.collections import Collections
 from trivial_minus.episodes import Episodes
 from trivial_minus.exceptions import HTTPError, ResourceNotFoundError
 from trivial_minus.movie import Movie
@@ -52,6 +55,9 @@ class TrivialMinus:
         self.episodes = Episodes(self)
         self.movie = Movie(self)
         self.section = Section(self)
+        self.collections = Collections(self)
+        self.collection = Collection(self)
+        self.carousel = Carousel(self)
 
     # TODO: Validate
     def json_headers(self, referer: str) -> dict[str, str]:

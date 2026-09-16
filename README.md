@@ -30,6 +30,17 @@ for episode in episodes.result.data:
 movie = client.movie("ALVE01KT235XQDEK58R7H2012VNZMK")
 print(movie.name, movie.content_rating)
 
+# A collection groups shows and movies, and its entries are in its carousels.
+collections = client.collections()
+a_to_z = next(c for c in collections.carousels if c.title == "All Collections A-Z")
+for entry in client.carousel("all-collections", token=a_to_z.token).data:
+    print(entry.slug, entry.title)
+
+collection = client.collection("true-crime")
+for collection_carousel in collection.carousels:
+    entries = client.carousel("true-crime", token=collection_carousel.token)
+    print(entries.title, [entry.href for entry in entries.data])
+
 # A section is one of the video carousels on a show page, such as Clips.
 for listed_section in show.sections:
     section = client.section("south-park", section_id=listed_section.id)

@@ -123,3 +123,30 @@ class SectionNotFoundError(TrivialMinusError):
         self.section_id = section_id
         self.response = response
         super().__init__(f"There is no section {section_id}")
+
+
+# TODO: Validate
+class CollectionNotFoundError(TrivialMinusError):
+    """Raised when the requested collection does not exist."""
+
+    # TODO: Validate
+    def __init__(self, message: str, response: str | None = None) -> None:
+        """Initialize with the problem and the page it was read from."""
+        self.response = response
+        super().__init__(message)
+
+
+# TODO: Validate
+class EmptyCarouselError(TrivialMinusError):
+    """Raised when a carousel holds nothing at the offset that was asked for."""
+
+    # TODO: Validate
+    def __init__(
+        self,
+        offset: int,
+        response: str | dict[str, Any] | None,
+    ) -> None:
+        """Initialize with the offset that was asked for and the response."""
+        self.offset = offset
+        self.response = response
+        super().__init__(f"The carousel holds nothing at offset {offset}")
