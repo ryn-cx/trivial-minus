@@ -317,8 +317,8 @@ class ItemPem(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
     pvr_model: str | None = Field(None, alias='pvrModel')
     draw_id: UUID | None = Field(None, alias='drawId')
-    p: str | None = None
     arm_id: UUID | None = Field(None, alias='armId')
+    p: str | None = None
     mab_id: str | None = Field(None, alias='mabId')
 
 class Subrating(BaseModel):
@@ -602,8 +602,29 @@ class Datum(BaseModel):
     badge_label: bool | str | None = Field(None, alias='badgeLabel')
     aa_link: str | None = Field(None, alias='aaLink')
     impression: str | None = None
-    display_item_title: bool | None = Field(None, alias='displayItemTitle')
+    promo_tile: bool | None = Field(None, alias='promoTile')
+    promo_icon: str | None = Field(None, alias='promoIcon')
+    cta_line1: str | None = Field(None, alias='ctaLine1')
+    cta_line2: str | None = Field(None, alias='ctaLine2')
+    cta_text: str | None = Field(None, alias='ctaText')
+    deep_link_url: str | None = Field(None, alias='deepLinkUrl')
+    hub_id: int | None = Field(None, alias='hubId')
+    content_locked: int | str | None = Field(None, alias='contentLocked')
     is_user_subscriber: bool | None = Field(None, alias='isUserSubscriber')
+    is_user_registered: bool | None = Field(None, alias='isUserRegistered')
+    brand: str | None = None
+    data_tracking: str | None = Field(None, alias='dataTracking')
+    is_movie: bool | None = Field(None, alias='isMovie')
+    label: str | None = None
+    genre: str | None = None
+    show_series_id: int | str | None = Field(None, alias='showSeriesId')
+    series_id: int | str | None = Field(None, alias='seriesId')
+    content_id_1: str | None = Field(None, alias='content_id')
+    orientation: str | None = None
+    movie_id: int | str | None = Field(None, alias='movieId')
+    upsell_url: str | None = Field(None, alias='upsellUrl')
+    lock_icon: str | None = Field(None, alias='lockIcon')
+    display_item_title: bool | None = Field(None, alias='displayItemTitle')
     is_user_kid_profile: str | None = Field(None, alias='isUserKidProfile')
     is_content_accessible_in_cms: bool | None = Field(None, alias='isContentAccessibleInCMS')
     show_or_movie: str | None = Field(None, alias='showOrMovie')
@@ -612,17 +633,13 @@ class Datum(BaseModel):
     movie_content: Any | MovieContent1 | None = Field(None, alias='movieContent')
     trailer_content: Any | TrailerContent1 | None = Field(None, alias='trailerContent')
     video_preview_url: str | None = Field(None, alias='videoPreviewURL')
-    data_tracking: str | None = Field(None, alias='dataTracking')
     show_series_title: str | None = Field(None, alias='showSeriesTitle')
     title_slug: str | None = Field(None, alias='titleSlug')
-    brand: str | None = None
     brand_name: str | None = Field(None, alias='brandName')
-    genre: str | None = None
     num_seasons: int | str | None = Field(None, alias='numSeasons')
     carousel_content_type: str | None = Field(None, alias='carouselContentType')
     cast_names: str | None = Field(None, alias='castNames')
     poster: str | None = None
-    movie_id: int | str | None = Field(None, alias='movieId')
     content_notification_add_action_url: str | None = Field(None, alias='contentNotificationAddActionUrl')
     content_notification_remove_action_url: str | None = Field(None, alias='contentNotificationRemoveActionUrl')
     content_my_list_add_action_url: str | None = Field(None, alias='contentMyListAddActionUrl')
@@ -643,24 +660,11 @@ class Datum(BaseModel):
     button: Button | None = None
     logo: str | None = None
     title_text: str | None = Field(None, alias='titleText')
-    content_id_1: str | None = Field(None, alias='content_id')
-    is_movie: bool | None = Field(None, alias='isMovie')
     movie_duration: str | None = Field(None, alias='movieDuration')
     movie_rating: str | None = Field(None, alias='movieRating')
-    upsell_url: str | None = Field(None, alias='upsellUrl')
-    lock_icon: str | None = Field(None, alias='lockIcon')
-    orientation: str | None = None
-    promo_tile: bool | None = Field(None, alias='promoTile')
-    promo_icon: str | None = Field(None, alias='promoIcon')
-    cta_line1: str | None = Field(None, alias='ctaLine1')
-    cta_line2: str | None = Field(None, alias='ctaLine2')
-    deep_link_url: str | None = Field(None, alias='deepLinkUrl')
-    hub_id: int | None = Field(None, alias='hubId')
-    content_locked: int | str | None = Field(None, alias='contentLocked')
     show_movie_id: str | None = Field(None, alias='showMovieId')
     action_url: str | None = Field(None, alias='actionUrl')
     series_title: str | None = Field(None, alias='seriesTitle')
-    series_id: int | None = Field(None, alias='seriesId')
     episode_title: str | None = Field(None, alias='episodeTitle')
     episode_id: str | None = Field(None, alias='episodeId')
     season_number: str | None = Field(None, alias='seasonNumber')
@@ -677,8 +681,6 @@ class Datum(BaseModel):
     video_preview_id: str | None = Field(None, alias='videoPreviewId')
     notify_on: bool | None = Field(None, alias='notifyOn')
     watch_list_cta_content: WatchListCtaContent | None = Field(None, alias='watchListCtaContent')
-    cta_text: str | None = Field(None, alias='ctaText')
-    show_series_id: int | str | None = Field(None, alias='showSeriesId')
     filepath1x1_default_image: str | None = Field(None, alias='filepath1x1DefaultImage')
     filepath1x1_focus_state_image: str | None = Field(None, alias='filepath1x1FocusStateImage')
     movie_title: str | None = Field(None, alias='movieTitle')
