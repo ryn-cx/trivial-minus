@@ -16,6 +16,7 @@ from .strict_models import CarouselModel as StrictModel
 if TYPE_CHECKING:
     from .strict_models import (
         AvailableVideoSeason,
+        AvailableVideoSeason1,
         Button,
         CarouselModel,
         Content,
@@ -27,6 +28,7 @@ if TYPE_CHECKING:
         PlaybackEvents1,
         RegionalRating,
         RegionalRating1,
+        ShowAssets,
         Subrating,
         ThumbnailSetItem,
         ThumbnailSheetSetItem,
@@ -35,6 +37,7 @@ if TYPE_CHECKING:
 else:
     from .optional_models import (
         AvailableVideoSeason,
+        AvailableVideoSeason1,
         Button,
         CarouselModel,
         Content,
@@ -46,6 +49,7 @@ else:
         PlaybackEvents1,
         RegionalRating,
         RegionalRating1,
+        ShowAssets,
         Subrating,
         ThumbnailSetItem,
         ThumbnailSheetSetItem,
@@ -54,6 +58,7 @@ else:
 
 __all__ = [
     "AvailableVideoSeason",
+    "AvailableVideoSeason1",
     "Button",
     "CarouselModel",
     "Content",
@@ -65,6 +70,7 @@ __all__ = [
     "PlaybackEvents1",
     "RegionalRating",
     "RegionalRating1",
+    "ShowAssets",
     "Subrating",
     "ThumbnailSetItem",
     "ThumbnailSheetSetItem",

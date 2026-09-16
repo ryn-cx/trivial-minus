@@ -6,19 +6,82 @@ from typing import Any
 from uuid import UUID
 from pydantic import AwareDatetime, BaseModel, Field
 
+class AvailableVideoSeason(BaseModel):
+    model_config = ConfigDict(defer_build=True)
+    season_num: str = Field(..., alias='seasonNum')
+    total_count: int = Field(..., alias='totalCount')
+    premium_count: int = Field(..., alias='premiumCount')
+    clips_count: int = Field(..., alias='clipsCount')
+    delay_count: int = Field(..., alias='delayCount')
+    season_premiere_date: None = Field(..., alias='seasonPremiereDate')
+    season_premiere_date_epoch: None = Field(..., alias='seasonPremiereDateEpoch')
+    season_finale_date: None = Field(..., alias='seasonFinaleDate')
+    season_finale_date_epoch: None = Field(..., alias='seasonFinaleDateEpoch')
+
+class ShowAssets(BaseModel):
+    model_config = ConfigDict(defer_build=True)
+    filepath_show_poster: str | None = None
+    filepath_apple_airplay: str
+    filepath_mobile_endcard: str
+    filepath_show_page_header: str
+    filepath_title_logo_regular: str
+    filepath_video_endcard_show_image: str
+    filepath_title_logo_left: str
+    filepath_apple_centered_background: str
+    filepath_show_hero_landscape: str | None = None
+    filepath_title_logo_center: str
+    filepath_ott_hd_show_image_overhang: str
+    filepath_apple_content_logo_polychromatic: str
+    filepath_show_browse_poster: str
+    filepath_show_hero_regular: str
+    filepath_show_hero_compact: str
+    filepath_show_hero_portrait: str | None = None
+    filepath_apple_cover_artwork_horizontal: str
+    filepath_apple_centered_background_small: str
+    filepath_apple_content_logo_monochromatic: str
+    filepath_title_logo_compact: str
+    filepath_apple_top_shelf: str
+    filepath_partner_brand_logo: str | None = None
+    filepath_brand_hero: str | None = None
+
 class Content(BaseModel):
     model_config = ConfigDict(defer_build=True)
-    hub_id: int = Field(..., alias='hubId')
-    title: str
-    hub_slug: str = Field(..., alias='hubSlug')
-    type: str
-    hub_items: None = Field(..., alias='hubItems')
-    page_type: str = Field(..., alias='pageType')
-    region: str
-    locale: str
-    user_state: list[str] | None = Field(..., alias='userState')
-    live_on_date: int = Field(..., alias='liveOnDate')
-    variant_key: None = Field(..., alias='variantKey')
+    hub_id: int | None = Field(None, alias='hubId')
+    title: str | None = None
+    hub_slug: str | None = Field(None, alias='hubSlug')
+    type: str | None = None
+    hub_items: None = Field(None, alias='hubItems')
+    page_type: str | None = Field(None, alias='pageType')
+    region: str | None = None
+    locale: str | None = None
+    user_state: list[str] | None = Field(None, alias='userState')
+    live_on_date: int | None = Field(None, alias='liveOnDate')
+    variant_key: None = Field(None, alias='variantKey')
+    show_id: int | None = Field(None, alias='showId')
+    league_id: int | None = Field(None, alias='leagueId')
+    about: str | None = None
+    show_title: str | None = Field(None, alias='showTitle')
+    content_type: str | None = Field(None, alias='contentType')
+    show_path: str | None = Field(None, alias='showPath')
+    tune_in_time: str | None = Field(None, alias='tuneInTime')
+    premium_features: list[None] | None = Field(None, alias='premiumFeatures')
+    brand_slug: str | None = Field(None, alias='brandSlug')
+    category: str | None = None
+    available_video_seasons: list[AvailableVideoSeason] | None = Field(None, alias='availableVideoSeasons')
+    show_assets: ShowAssets | None = Field(None, alias='showAssets')
+    callbacks: dict[str, Any] | None = None
+    rating: str | None = None
+    first_available_date: AwareDatetime | None = Field(None, alias='firstAvailableDate')
+    is_content_accessible_in_cms: bool | None = Field(None, alias='isContentAccessibleInCMS')
+    required_add_ons: list[None] | None = Field(None, alias='requiredAddOns')
+    is_after_hours: bool | None = Field(None, alias='isAfterHours')
+    is_kids_content: bool | None = Field(None, alias='isKidsContent')
+    cast_names: list[str] | None = Field(None, alias='castNames')
+    sub_video_starting_point_cta: str | None = Field(None, alias='subVideoStartingPointCTA')
+    genre: str | None = None
+    unified_genre: list[str] | None = Field(None, alias='unifiedGenre')
+    video_preview_url: str | None = Field(None, alias='videoPreviewURL')
+    show_premiere_date_str: AwareDatetime | None = Field(None, alias='showPremiereDateStr')
 
 class ItemPem(BaseModel):
     model_config = ConfigDict(defer_build=True)
@@ -256,7 +319,7 @@ class TrailerContent(BaseModel):
     is_product_placement: bool = Field(..., alias='isProductPlacement')
     brand_slug: str | None = Field(None, alias='brandSlug')
 
-class AvailableVideoSeason(BaseModel):
+class AvailableVideoSeason1(BaseModel):
     model_config = ConfigDict(defer_build=True)
     season_num: str = Field(..., alias='seasonNum')
     total_count: int = Field(..., alias='totalCount')
@@ -357,7 +420,7 @@ class Datum(BaseModel):
     rating_icon: str | None = Field(None, alias='ratingIcon')
     season_counts: str | None = Field(None, alias='seasonCounts')
     premiere_date: str | None = Field(None, alias='premiereDate')
-    available_video_seasons: list[AvailableVideoSeason] | None = Field(None, alias='availableVideoSeasons')
+    available_video_seasons: list[AvailableVideoSeason1] | None = Field(None, alias='availableVideoSeasons')
     button: Button | None = None
     logo: str | None = None
     title_text: str | None = Field(None, alias='titleText')
@@ -374,7 +437,11 @@ class Datum(BaseModel):
     cta_line2: str | None = Field(None, alias='ctaLine2')
     deep_link_url: str | None = Field(None, alias='deepLinkUrl')
     hub_id: int | None = Field(None, alias='hubId')
-    content_locked: str | None = Field(None, alias='contentLocked')
+    content_locked: int | str | None = Field(None, alias='contentLocked')
+    show_series_id: int | str | None = Field(None, alias='showSeriesId')
+    filepath1x1_default_image: str | None = Field(None, alias='filepath1x1DefaultImage')
+    filepath1x1_focus_state_image: str | None = Field(None, alias='filepath1x1FocusStateImage')
+    movie_title: str | None = Field(None, alias='movieTitle')
 
 class CarouselModel(BaseModel):
     model_config = ConfigDict(defer_build=True)
