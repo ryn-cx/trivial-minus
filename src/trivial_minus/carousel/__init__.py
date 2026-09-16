@@ -110,6 +110,38 @@ class Carousel(BaseEndpoint):
         return self._validate_download(response, offset)
 
     # TODO: Validate
+    def download_all(
+        self,
+        collection_id: str,
+        *,
+        token: str,
+        limit: int = LIMIT,
+    ) -> list[str]:
+        pages: list[str] = []
+        offset = 0
+        while True:
+            try:
+                page = self.download(
+                    collection_id,
+                    token=token,
+                    offset=offset,
+                    limit=limit,
+                )
+            except EmptyCarouselError:
+                return pages
+            pages.append(page)
+            count = self.entry_count(page)
+            offset += count
+            if count < limit:
+                return pages
+
+    # TODO: Validate
+    @staticmethod
+    def entry_count(response: str) -> int:
+        entries = extract_carousel(response)["data"]
+        return len(entries) if isinstance(entries, list) else 0
+
+    # TODO: Validate
     def _validate_download(self, response: str, offset: int) -> str:
         if not read_response(response)["success"]:
             raise EmptyCarouselError(offset, response)

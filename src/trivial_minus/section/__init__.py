@@ -106,6 +106,29 @@ class Section(BaseEndpoint):
         return self._validate_download(response, section_id)
 
     # TODO: Validate
+    def download_all(
+        self,
+        show_id: str,
+        *,
+        section_id: int,
+        limit: int = LIMIT,
+    ) -> list[str]:
+        pages: list[str] = []
+        offset = 0
+        while True:
+            page = self.download(
+                show_id,
+                section_id=section_id,
+                offset=offset,
+                limit=limit,
+            )
+            pages.append(page)
+            section = extract_section(page)
+            offset += len(section["data"])
+            if not section["data"] or offset >= section["total"]:
+                return pages
+
+    # TODO: Validate
     def _validate_download(self, response: str, section_id: int) -> str:
         if not json.loads(response)["success"]:
             raise SectionNotFoundError(section_id, response)
