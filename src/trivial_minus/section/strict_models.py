@@ -47,7 +47,7 @@ class Datum(BaseModel):
     is_seasonless: bool = Field(..., alias='isSeasonless')
     is_episodeless: bool = Field(..., alias='isEpisodeless')
     aa_link: str = Field(..., alias='aaLink')
-    rating: str
+    rating: str | None = None
     duration: str
     content_id_impression: str = Field(..., alias='contentIdImpression')
     position: int
@@ -55,7 +55,8 @@ class Datum(BaseModel):
     about: str
     description: str
     bundle_locked: bool = Field(..., alias='bundleLocked')
-    lock_icon: None = Field(..., alias='lockIcon')
+    lock_icon: str | None = Field(..., alias='lockIcon')
+    upsell_url: str | None = Field(None, alias='upsellUrl')
 
 class SectionModel(BaseModel):
     model_config = ConfigDict(defer_build=True)

@@ -4,87 +4,87 @@ from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 
 class Show(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    name: str | None = None
-    id: int | None = None
-    key: str | None = None
-    tune_in_time: str | None = None
-    available_for_profile_types_on_shows: str | None = Field(None, alias='availableForProfileTypesOnShows')
-    category: str | None = None
+    name: str | Any = Field(default=None, union_mode='left_to_right')
+    id: int | Any = Field(default=None, union_mode='left_to_right')
+    key: str | Any = Field(default=None, union_mode='left_to_right')
+    tune_in_time: str | Any = Field(default=None, union_mode='left_to_right')
+    available_for_profile_types_on_shows: str | Any = Field(None, alias='availableForProfileTypesOnShows', union_mode='left_to_right')
+    category: str | Any = Field(default=None, union_mode='left_to_right')
 
 class Target(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    field_type: str | None = Field(None, alias='@type')
-    url_template: str | None = Field(None, alias='urlTemplate')
-    action_platform: str | list[str] | None = Field(None, alias='actionPlatform')
+    field_type: str | Any = Field(None, alias='@type', union_mode='left_to_right')
+    url_template: str | Any = Field(None, alias='urlTemplate', union_mode='left_to_right')
+    action_platform: str | list[str] | Any = Field(None, alias='actionPlatform', union_mode='left_to_right')
 
 class PotentialActionItem(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    field_type: str | None = Field(None, alias='@type')
-    target: Target | None = None
+    field_type: str | Any = Field(None, alias='@type', union_mode='left_to_right')
+    target: Target | Any = Field(default=None, union_mode='left_to_right')
 
 class Broadcaster(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    field_type: str | None = Field(None, alias='@type')
-    legal_name: str | None = Field(None, alias='legalName')
-    logo: str | None = None
-    name: str | None = None
-    url: str | None = None
+    field_type: str | Any = Field(None, alias='@type', union_mode='left_to_right')
+    legal_name: str | Any = Field(None, alias='legalName', union_mode='left_to_right')
+    logo: str | Any = Field(default=None, union_mode='left_to_right')
+    name: str | Any = Field(default=None, union_mode='left_to_right')
+    url: str | Any = Field(default=None, union_mode='left_to_right')
 
 class PublishedOn(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    field_type: str | None = Field(None, alias='@type')
-    name: str | None = None
-    broadcaster: Broadcaster | None = None
+    field_type: str | Any = Field(None, alias='@type', union_mode='left_to_right')
+    name: str | Any = Field(default=None, union_mode='left_to_right')
+    broadcaster: Broadcaster | Any = Field(default=None, union_mode='left_to_right')
 
 class PublicationItem(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    field_type: str | None = Field(None, alias='@type')
-    start_date: AwareDatetime | str | None = Field(None, alias='startDate', union_mode='left_to_right')
-    published_on: PublishedOn | None = Field(None, alias='publishedOn')
+    field_type: str | Any = Field(None, alias='@type', union_mode='left_to_right')
+    start_date: AwareDatetime | str | Any = Field(None, alias='startDate', union_mode='left_to_right')
+    published_on: PublishedOn | Any = Field(None, alias='publishedOn', union_mode='left_to_right')
 
 class EpisodeItem(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    field_type: str | None = Field(None, alias='@type')
-    episode_number: str | None = Field(None, alias='episodeNumber')
-    name: str | None = None
-    description: str | None = None
-    url: str | None = None
-    publication: list[PublicationItem] | None = None
+    field_type: str | Any = Field(None, alias='@type', union_mode='left_to_right')
+    episode_number: str | Any = Field(None, alias='episodeNumber', union_mode='left_to_right')
+    name: str | Any = Field(default=None, union_mode='left_to_right')
+    description: str | Any = Field(default=None, union_mode='left_to_right')
+    url: str | Any = Field(default=None, union_mode='left_to_right')
+    publication: list[PublicationItem] | Any = Field(default=None, union_mode='left_to_right')
 
 class ContainsSeason(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    field_type: str | None = Field(None, alias='@type')
-    name: str | None = None
-    number_of_episodes: str | None = Field(None, alias='numberOfEpisodes')
-    episode: list[EpisodeItem] | None = None
+    field_type: str | Any = Field(None, alias='@type', union_mode='left_to_right')
+    name: str | Any = Field(default=None, union_mode='left_to_right')
+    number_of_episodes: str | Any = Field(None, alias='numberOfEpisodes', union_mode='left_to_right')
+    episode: list[EpisodeItem] | Any = Field(default=None, union_mode='left_to_right')
 
 class Series(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    field_context: str | None = Field(None, alias='@context')
-    field_id: str | None = Field(None, alias='@id')
-    field_type: str | None = Field(None, alias='@type')
-    name: str | None = None
-    url: str | None = None
-    potential_action: list[PotentialActionItem] | None = Field(None, alias='potentialAction')
-    contains_season: ContainsSeason | None = Field(None, alias='containsSeason')
+    field_context: str | Any = Field(None, alias='@context', union_mode='left_to_right')
+    field_id: str | Any = Field(None, alias='@id', union_mode='left_to_right')
+    field_type: str | Any = Field(None, alias='@type', union_mode='left_to_right')
+    name: str | Any = Field(default=None, union_mode='left_to_right')
+    url: str | Any = Field(default=None, union_mode='left_to_right')
+    potential_action: list[PotentialActionItem] | Any = Field(None, alias='potentialAction', union_mode='left_to_right')
+    contains_season: ContainsSeason | Any = Field(None, alias='containsSeason', union_mode='left_to_right')
 
 class Section(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    id: int | None = None
-    title: str | None = None
+    id: int | Any = Field(default=None, union_mode='left_to_right')
+    title: str | Any = Field(default=None, union_mode='left_to_right')
 
 class Recommendation(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    title: str | None = None
-    url: str | None = None
+    title: str | Any = Field(default=None, union_mode='left_to_right')
+    url: str | Any = Field(default=None, union_mode='left_to_right')
 
 class ShowModel(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    show: Show | None = None
-    series: Series | None = None
-    seasons: list[int] | None = None
-    sections: list[Section] | None = None
-    recommendations: list[Recommendation] | None = None
+    show: Show | Any = Field(default=None, union_mode='left_to_right')
+    series: Series | Any = Field(default=None, union_mode='left_to_right')
+    seasons: list[int] | Any = Field(default=None, union_mode='left_to_right')
+    sections: list[Section] | Any = Field(default=None, union_mode='left_to_right')
+    recommendations: list[Recommendation] | Any = Field(default=None, union_mode='left_to_right')
     _raw_input: Any = PrivateAttr(default=None)
 
     @model_validator(mode='wrap')

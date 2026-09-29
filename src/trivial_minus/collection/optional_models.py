@@ -6,33 +6,33 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class Hub(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    id: int | None = None
-    hub_slug: str | None = Field(None, alias='hubSlug')
-    hub_page_type: str | None = Field(None, alias='hubPageType')
-    screen_name: str | None = Field(None, alias='screenName')
+    id: int | Any = Field(default=None, union_mode='left_to_right')
+    hub_slug: str | Any = Field(None, alias='hubSlug', union_mode='left_to_right')
+    hub_page_type: str | Any = Field(None, alias='hubPageType', union_mode='left_to_right')
+    screen_name: str | Any = Field(None, alias='screenName', union_mode='left_to_right')
 
 class Carousel(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    token: str | None = None
-    display_id: UUID | None = Field(None, alias='displayId')
-    reco_id: UUID | None = Field(None, alias='recoId')
-    carousel_id: UUID | str | None = Field(None, alias='carouselId', union_mode='left_to_right')
-    orientation: str | None = None
-    title: str | None = None
+    token: str | Any = Field(default=None, union_mode='left_to_right')
+    display_id: UUID | Any = Field(None, alias='displayId', union_mode='left_to_right')
+    reco_id: UUID | Any = Field(None, alias='recoId', union_mode='left_to_right')
+    carousel_id: UUID | str | Any = Field(None, alias='carouselId', union_mode='left_to_right')
+    orientation: str | Any = Field(default=None, union_mode='left_to_right')
+    title: str | Any = Field(default=None, union_mode='left_to_right')
     position: Any | None = None
-    model: str | None = None
-    api_base_url: str | None = Field(None, alias='apiBaseUrl')
-    slug: str | None = None
-    channel_slug: UUID | str | None = Field(None, alias='channelSlug', union_mode='left_to_right')
-    is_content_highlight_enabled: bool | None = Field(None, alias='isContentHighlightEnabled')
-    carousel_presentation_style: str | None = Field(None, alias='carouselPresentationStyle')
-    has_browse_numeric_experiment: bool | None = Field(None, alias='hasBrowseNumericExperiment')
-    dom_id: str | None = Field(None, alias='domId')
+    model: str | Any = Field(default=None, union_mode='left_to_right')
+    api_base_url: str | Any = Field(None, alias='apiBaseUrl', union_mode='left_to_right')
+    slug: str | Any = Field(default=None, union_mode='left_to_right')
+    channel_slug: UUID | str | Any = Field(None, alias='channelSlug', union_mode='left_to_right')
+    is_content_highlight_enabled: bool | Any = Field(None, alias='isContentHighlightEnabled', union_mode='left_to_right')
+    carousel_presentation_style: str | Any = Field(None, alias='carouselPresentationStyle', union_mode='left_to_right')
+    has_browse_numeric_experiment: bool | Any = Field(None, alias='hasBrowseNumericExperiment', union_mode='left_to_right')
+    dom_id: str | Any = Field(None, alias='domId', union_mode='left_to_right')
 
 class CollectionModel(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    hub: Hub | None = None
-    carousels: list[Carousel] | None = None
+    hub: Hub | Any = Field(default=None, union_mode='left_to_right')
+    carousels: list[Carousel] | Any = Field(default=None, union_mode='left_to_right')
     _raw_input: Any = PrivateAttr(default=None)
 
     @model_validator(mode='wrap')

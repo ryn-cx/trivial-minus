@@ -6,44 +6,44 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class Hub(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    id: int | None = None
-    hub_slug: str | None = Field(None, alias='hubSlug')
-    hub_page_type: str | None = Field(None, alias='hubPageType')
-    page_type: str | None = Field(None, alias='pageType')
+    id: int | Any = Field(default=None, union_mode='left_to_right')
+    hub_slug: str | Any = Field(None, alias='hubSlug', union_mode='left_to_right')
+    hub_page_type: str | Any = Field(None, alias='hubPageType', union_mode='left_to_right')
+    page_type: str | Any = Field(None, alias='pageType', union_mode='left_to_right')
 
 class Category(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    id: int | None = None
-    title: str | None = None
-    locale: str | None = None
-    slug: str | None = None
-    global_menu_link: str | None = None
-    link_type: str | None = None
-    item_key: str | None = Field(None, alias='itemKey')
+    id: int | Any = Field(default=None, union_mode='left_to_right')
+    title: str | Any = Field(default=None, union_mode='left_to_right')
+    locale: str | Any = Field(default=None, union_mode='left_to_right')
+    slug: str | Any = Field(default=None, union_mode='left_to_right')
+    global_menu_link: str | Any = Field(default=None, union_mode='left_to_right')
+    link_type: str | Any = Field(default=None, union_mode='left_to_right')
+    item_key: str | Any = Field(None, alias='itemKey', union_mode='left_to_right')
 
 class Carousel(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    token: str | None = None
-    display_id: UUID | None = Field(None, alias='displayId')
-    reco_id: UUID | None = Field(None, alias='recoId')
-    carousel_id: UUID | None = Field(None, alias='carouselId')
-    orientation: str | None = None
-    title: str | None = None
+    token: str | Any = Field(default=None, union_mode='left_to_right')
+    display_id: UUID | Any = Field(None, alias='displayId', union_mode='left_to_right')
+    reco_id: UUID | Any = Field(None, alias='recoId', union_mode='left_to_right')
+    carousel_id: UUID | Any = Field(None, alias='carouselId', union_mode='left_to_right')
+    orientation: str | Any = Field(default=None, union_mode='left_to_right')
+    title: str | Any = Field(default=None, union_mode='left_to_right')
     position: Any | None = None
-    model: str | None = None
-    api_base_url: str | None = Field(None, alias='apiBaseUrl')
-    slug: str | None = None
-    channel_slug: UUID | None = Field(None, alias='channelSlug')
-    is_content_highlight_enabled: bool | None = Field(None, alias='isContentHighlightEnabled')
-    carousel_presentation_style: str | None = Field(None, alias='carouselPresentationStyle')
-    has_browse_numeric_experiment: bool | None = Field(None, alias='hasBrowseNumericExperiment')
-    dom_id: str | None = Field(None, alias='domId')
+    model: str | Any = Field(default=None, union_mode='left_to_right')
+    api_base_url: str | Any = Field(None, alias='apiBaseUrl', union_mode='left_to_right')
+    slug: str | Any = Field(default=None, union_mode='left_to_right')
+    channel_slug: UUID | Any = Field(None, alias='channelSlug', union_mode='left_to_right')
+    is_content_highlight_enabled: bool | Any = Field(None, alias='isContentHighlightEnabled', union_mode='left_to_right')
+    carousel_presentation_style: str | Any = Field(None, alias='carouselPresentationStyle', union_mode='left_to_right')
+    has_browse_numeric_experiment: bool | Any = Field(None, alias='hasBrowseNumericExperiment', union_mode='left_to_right')
+    dom_id: str | Any = Field(None, alias='domId', union_mode='left_to_right')
 
 class CollectionsModel(BaseModel):
     model_config = ConfigDict(extra='ignore', defer_build=True)
-    hub: Hub | None = None
-    categories: list[Category] | None = None
-    carousels: list[Carousel] | None = None
+    hub: Hub | Any = Field(default=None, union_mode='left_to_right')
+    categories: list[Category] | Any = Field(default=None, union_mode='left_to_right')
+    carousels: list[Carousel] | Any = Field(default=None, union_mode='left_to_right')
     _raw_input: Any = PrivateAttr(default=None)
 
     @model_validator(mode='wrap')

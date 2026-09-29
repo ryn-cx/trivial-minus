@@ -15,7 +15,7 @@ class RegionalRatings(BaseModel):
     rating: str
     disclaimer: None
     secondary_descriptors: str | None = Field(..., alias='secondaryDescriptors')
-    subratings: list[Subrating]
+    subratings: list[Subrating] | None
     consumer_advice: None = Field(..., alias='consumerAdvice')
     rating_icon: None = Field(..., alias='ratingIcon')
 
@@ -39,7 +39,7 @@ class RegionalRating(BaseModel):
     rating: str
     disclaimer: None
     secondary_descriptors: str | None = Field(..., alias='secondaryDescriptors')
-    subratings: list[Subrating]
+    subratings: list[Subrating] | None
     consumer_advice: None = Field(..., alias='consumerAdvice')
     rating_icon: None = Field(..., alias='ratingIcon')
 
@@ -60,7 +60,7 @@ class MetaData(BaseModel):
     full_episode: bool = Field(..., alias='fullEpisode')
     is_service_allowed: bool = Field(..., alias='isServiceAllowed')
     oztam_media_id: None = Field(..., alias='oztamMediaId')
-    pid: None
+    pid: str | None
     daistream_key: None = Field(..., alias='daistreamKey')
     preview_image_url: None = Field(..., alias='previewImageURL')
     rating: str
@@ -94,7 +94,7 @@ class RegionalRating1(BaseModel):
     rating: str
     disclaimer: None
     secondary_descriptors: str | None = Field(..., alias='secondaryDescriptors')
-    subratings: list[Subrating]
+    subratings: list[Subrating] | None
     consumer_advice: None = Field(..., alias='consumerAdvice')
     rating_icon: None = Field(..., alias='ratingIcon')
 
@@ -117,8 +117,8 @@ class ApiMetadata(BaseModel):
     field_air_date: str = Field(..., alias='_airDate')
     duration: int
     rating: str
-    expiration_date: int = Field(..., alias='expirationDate')
-    field_expiration_date: str = Field(..., alias='_expirationDate')
+    expiration_date: int | None = Field(None, alias='expirationDate')
+    field_expiration_date: str | None = Field(None, alias='_expirationDate')
     field_air_date_iso: AwareDatetime = Field(..., alias='_airDateISO')
     subscription_level: str = Field(..., alias='subscriptionLevel')
     media_available_date: AwareDatetime = Field(..., alias='mediaAvailableDate')
@@ -131,13 +131,15 @@ class ApiMetadata(BaseModel):
     video_properties: list[str] = Field(..., alias='videoProperties')
     available_for_profile_types: list[str] = Field(..., alias='availableForProfileTypes')
     copyright: str
-    add_ons: list[None] = Field(..., alias='addOns')
-    brand_slug: str = Field(..., alias='brandSlug')
+    add_ons: list[str] = Field(..., alias='addOns')
     original_release_year: int = Field(..., alias='originalReleaseYear')
     is_content_accessible_in_can: bool = Field(..., alias='isContentAccessibleInCAN')
     thumbnail_sheet_set: list[None] = Field(..., alias='thumbnailSheetSet')
     is_product_placement: bool = Field(..., alias='isProductPlacement')
     video_title: str = Field(..., alias='videoTitle')
+    pid: str | None = None
+    streaming_url: str | None = Field(None, alias='streamingUrl')
+    brand_slug: str | None = Field(None, alias='brandSlug')
 
 class Datum(BaseModel):
     model_config = ConfigDict(defer_build=True)
@@ -145,11 +147,12 @@ class Datum(BaseModel):
     title: str
     series_title: str
     label: str
+    default_title: str | None = Field(None, alias='defaultTitle')
     content_id: str
     airdate: str
     airdate_ts: int
     airdate_iso: AwareDatetime
-    expiredate_raw: str
+    expiredate_raw: str | None
     season_number: str
     episode_number: str
     duration: str
