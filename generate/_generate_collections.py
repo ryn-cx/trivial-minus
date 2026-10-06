@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import logging
+from typing import override
 
 from get_around import build_client_automatically
 from good_ass_pydantic_integrator.recordings import (
     RecordingId,
-    download_named_missing,
-    load_named_ids,
+    download_missing,
+    load_ids,
     rebuild_model,
 )
 
@@ -20,16 +21,21 @@ MODEL_NAME = "CollectionsModel"
 # TODO: Validate
 class CollectionsId(RecordingId[TrivialMinus]):
     # TODO: Validate
+    @override
+    def recording_name(self) -> str:
+        return "collections"
+
+    # TODO: Validate
     def download(self, client: TrivialMinus) -> str:
         return client.collections.download()
 
 
-COLLECTIONS = load_named_ids(GENERATOR_PATHS, MODEL_NAME, CollectionsId)
+COLLECTIONS = load_ids(GENERATOR_PATHS, MODEL_NAME, CollectionsId)
 
 
 # TODO: Validate
 def generate_collections(client: TrivialMinus) -> None:
-    download_named_missing(GENERATOR_PATHS, MODEL_NAME, COLLECTIONS, client, ".html")
+    download_missing(GENERATOR_PATHS, MODEL_NAME, COLLECTIONS, client, ".html")
     rebuild_model(
         GENERATOR_PATHS,
         MODEL_NAME,
