@@ -86,6 +86,8 @@ class ShowModel(BaseModel):
     seasons: list[int]
     sections: list[Section]
     recommendations: list[Recommendation]
+    cast: list[str]
+    brand: str | None
     _raw_input: Any = PrivateAttr(default=None)
 
     @model_validator(mode='wrap')

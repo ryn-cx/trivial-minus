@@ -85,6 +85,8 @@ class ShowModel(BaseModel):
     seasons: list[int] | Any = Field(default=None, union_mode='left_to_right')
     sections: list[Section] | Any = Field(default=None, union_mode='left_to_right')
     recommendations: list[Recommendation] | Any = Field(default=None, union_mode='left_to_right')
+    cast: list[str] | Any = Field(default=None, union_mode='left_to_right')
+    brand: str | Any = Field(default=None, union_mode='left_to_right')
     _raw_input: Any = PrivateAttr(default=None)
 
     @model_validator(mode='wrap')

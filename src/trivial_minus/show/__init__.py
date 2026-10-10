@@ -55,6 +55,8 @@ def extract_show(page: str) -> dict[str, Any]:
         "seasons": extract_seasons(page),
         "sections": extract_sections(page),
         "recommendations": extract_recommendations(page),
+        "cast": extract_cast(page),
+        "brand": extract_brand(page),
     }
 
 
@@ -111,6 +113,22 @@ def extract_recommendations(page: str) -> list[dict[str, str]]:
         {"title": unescape(match.group("title")), "url": match.group("url")}
         for match in RECOMMENDATION_RE.finditer(carousel.group())
     ]
+
+
+# TODO: Validate
+def extract_cast(page: str) -> list[str]:
+    return [
+        unescape(name).strip()
+        for name in re.findall(r'<span class="about__cast-item">([^<]*)</span>', page)
+    ]
+
+
+# TODO: Validate
+def extract_brand(page: str) -> str | None:
+    match = re.search(r'<a class="about__metadata-brand"[^>]*>([^<]*)</a>', page)
+    if match is None:
+        return None
+    return unescape(match.group(1)).strip()
 
 
 # TODO: Validate
