@@ -67,7 +67,7 @@ class Series(BaseModel):
     name: str
     url: str
     potential_action: list[PotentialActionItem] = Field(..., alias='potentialAction')
-    contains_season: ContainsSeason = Field(..., alias='containsSeason')
+    contains_season: ContainsSeason | None = Field(None, alias='containsSeason')
 
 class Section(BaseModel):
     model_config = ConfigDict(defer_build=True)
@@ -88,7 +88,10 @@ class ShowModel(BaseModel):
     recommendations: list[Recommendation]
     cast: list[str]
     brand: str | None
-    description: str
+    description: str | None
+    year: int | None
+    logo: str
+    image: str
     _raw_input: Any = PrivateAttr(default=None)
 
     @model_validator(mode='wrap')

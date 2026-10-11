@@ -58,6 +58,9 @@ def extract_show(page: str) -> dict[str, Any]:
         "cast": extract_cast(page),
         "brand": extract_brand(page),
         "description": extract_description(page),
+        "year": extract_year(page),
+        "logo": extract_logo(page),
+        "image": extract_image(page),
     }
 
 
@@ -138,6 +141,40 @@ def extract_description(page: str) -> str | None:
     if match is None:
         return None
     return unescape(match.group(1)).strip()
+
+
+# TODO: Validate
+def extract_year(page: str) -> int | None:
+    match = re.search(
+        r'<span class="about__metadata-title">Year</span>\s*<span>\s*(\d+)\s*</span>',
+        page,
+    )
+    if match is None:
+        return None
+    return int(match.group(1))
+
+
+# TODO: Validate
+def extract_logo(page: str) -> str | None:
+    match = re.search(
+        r'<div class="hero__grid">\s*<h1>\s*<img\s[^>]*?src="([^"]+)"',
+        page,
+    )
+    if match is None:
+        return None
+    return unescape(match.group(1))
+
+
+# TODO: Validate
+def extract_image(page: str) -> str | None:
+    match = re.search(
+        r'id="hero-slider".*?<picture>.*?<img src="([^"]+)"',
+        page,
+        re.DOTALL,
+    )
+    if match is None:
+        return None
+    return unescape(match.group(1))
 
 
 # TODO: Validate

@@ -7,7 +7,7 @@ from pydantic import AwareDatetime, BaseModel, Field
 class Subrating(BaseModel):
     model_config = ConfigDict(defer_build=True)
     code: str
-    description: str
+    description: str | None
 
 class RegionalRatings(BaseModel):
     model_config = ConfigDict(defer_build=True)
@@ -24,9 +24,9 @@ class Thumb(BaseModel):
     large: str
     small: str
     field_640x360: str = Field(..., alias='640x360')
-    field_640x480: str = Field(..., alias='640x480')
-    field_1400x2100: str = Field(..., alias='1400x2100')
-    poster: None
+    field_640x480: str | None = Field(None, alias='640x480')
+    field_1400x2100: str | None = Field(None, alias='1400x2100')
+    poster: None = Field(None)
 
 class EsturLs(BaseModel):
     model_config = ConfigDict(defer_build=True)
@@ -154,7 +154,7 @@ class Datum(BaseModel):
     airdate_iso: AwareDatetime
     expiredate_raw: str | None
     season_number: str
-    episode_number: str
+    episode_number: str | None
     duration: str
     duration_raw: int
     rating: str

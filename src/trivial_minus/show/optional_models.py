@@ -88,6 +88,9 @@ class ShowModel(BaseModel):
     cast: list[str] | Any = Field(default=None, union_mode='left_to_right')
     brand: str | Any = Field(default=None, union_mode='left_to_right')
     description: str | Any = Field(default=None, union_mode='left_to_right')
+    year: int | Any = Field(default=None, union_mode='left_to_right')
+    logo: str | Any = Field(default=None, union_mode='left_to_right')
+    image: str | Any = Field(default=None, union_mode='left_to_right')
     _raw_input: Any = PrivateAttr(default=None)
 
     @model_validator(mode='wrap')
