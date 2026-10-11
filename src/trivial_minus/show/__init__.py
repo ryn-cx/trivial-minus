@@ -57,6 +57,7 @@ def extract_show(page: str) -> dict[str, Any]:
         "recommendations": extract_recommendations(page),
         "cast": extract_cast(page),
         "brand": extract_brand(page),
+        "description": extract_description(page),
     }
 
 
@@ -126,6 +127,14 @@ def extract_cast(page: str) -> list[str]:
 # TODO: Validate
 def extract_brand(page: str) -> str | None:
     match = re.search(r'<a class="about__metadata-brand"[^>]*>([^<]*)</a>', page)
+    if match is None:
+        return None
+    return unescape(match.group(1)).strip()
+
+
+# TODO: Validate
+def extract_description(page: str) -> str | None:
+    match = re.search(r'<div class="about__header-description">([^<]*)</div>', page)
     if match is None:
         return None
     return unescape(match.group(1)).strip()

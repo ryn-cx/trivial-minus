@@ -88,6 +88,7 @@ class ShowModel(BaseModel):
     recommendations: list[Recommendation]
     cast: list[str]
     brand: str | None
+    description: str
     _raw_input: Any = PrivateAttr(default=None)
 
     @model_validator(mode='wrap')
