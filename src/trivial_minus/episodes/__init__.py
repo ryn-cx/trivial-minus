@@ -105,6 +105,31 @@ class Episodes(BaseEndpoint):
         return self._validate_download(response, season_number)
 
     # TODO: Validate
+    def download_all(
+        self,
+        show_id: str,
+        *,
+        season_number: int,
+        size: int = SIZE,
+    ) -> list[str]:
+        pages: list[str] = []
+        episode_count = 0
+        page_number = 0
+        while True:
+            page = self.download(
+                show_id,
+                season_number=season_number,
+                page=page_number,
+                size=size,
+            )
+            pages.append(page)
+            episodes = extract_episodes(page)
+            episode_count += len(episodes["data"])
+            page_number += 1
+            if not episodes["data"] or episode_count >= episodes["total"]:
+                return pages
+
+    # TODO: Validate
     def _validate_download(self, response: str, season_number: int) -> str:
         for episode in json.loads(response)["result"]["data"]:
             if int(episode["season_number"]) != season_number:
